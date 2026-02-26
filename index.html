@@ -21,10 +21,9 @@ h2{font-size:16px;font-weight:700;color:#fff;padding:0;margin:0}
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:12px;margin-bottom:12px}
 .sep{width:1px;height:16px;background:#e5e7eb;align-self:center}
 button{cursor:pointer;border:none;border-radius:20px;font-size:12px;font-weight:500;padding:4px 12px;background:#f3f4f6;color:#374151}
-button.ai{background:#4f46e5;color:#fff}
 button.ap{background:#7c3aed;color:#fff}
 button.aa{background:#f59e0b;color:#fff}
-.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .tab{font-size:12px;padding:6px 16px;border-radius:8px;border:1px solid transparent;background:transparent;font-weight:400;color:#6b7280;cursor:pointer}
 .tab.active{background:#fff;border-color:#e5e7eb;font-weight:600;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 table{width:100%;border-collapse:collapse}
@@ -35,7 +34,7 @@ tr:nth-child(even) td{background:#f9fafb}
 .bg{background:#d1fae5;color:#065f46}.by{background:#fef3c7;color:#92400e}
 .bo{background:#ffedd5;color:#9a3412}.br{background:#fee2e2;color:#991b1b}
 .gn{color:#059669;font-weight:500}.rd{color:#dc2626;font-weight:500}
-.trunc{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+.trunc{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
 .live{font-size:11px;color:#059669;background:#d1fae5;padding:4px 10px;border-radius:20px;font-weight:500}
 .hrow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .hbtns{display:flex;gap:8px;align-items:center}
@@ -61,6 +60,62 @@ tr:nth-child(even) td{background:#f9fafb}
 .drop-item{padding:8px 12px;font-size:12px;cursor:pointer;color:#111}
 .drop-item:hover{background:#eef2ff;color:#4f46e5}
 .drop-item.focused{background:#f3f4f6}
+
+/* ── INSIGHTS ── */
+.ins-wrap{padding:4px 0}
+.ins-period-bar{display:flex;align-items:center;gap:10px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:10px 16px;margin-bottom:12px;font-size:12px;color:#6b7280;flex-wrap:wrap}
+.ins-period-bar strong{color:#111;font-size:13px}
+.ins-period-bar .arrow{font-size:16px;color:#9ca3af}
+/* partial period banner */
+.partial-banner{border-radius:10px;padding:11px 16px;margin-bottom:12px;font-size:12px;display:flex;align-items:flex-start;gap:10px}
+.partial-banner.warn{background:#fffbeb;border:1px solid #fcd34d}
+.partial-banner.info{background:#eff6ff;border:1px solid #93c5fd}
+.partial-banner .pb-icon{font-size:18px;flex-shrink:0}
+.partial-banner .pb-body{flex:1}
+.partial-banner .pb-title{font-weight:700;font-size:12px;margin-bottom:3px}
+.partial-banner .pb-sub{color:#6b7280;line-height:1.5}
+/* projection toggle */
+.proj-toggle{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.proj-btn{font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #e5e7eb;background:#f9fafb;color:#6b7280;cursor:pointer;font-weight:500;transition:all .15s}
+.proj-btn.active-c{background:#eff6ff;border-color:#3b82f6;color:#1d4ed8;font-weight:600}
+.proj-btn.active-a{background:#f5f3ff;border-color:#7c3aed;color:#5b21b6;font-weight:600}
+.proj-mode-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.proj-mode-badge.c{background:#dbeafe;color:#1e40af}
+.proj-mode-badge.a{background:#ede9fe;color:#5b21b6}
+/* KPI row */
+.ins-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.ins-kpi{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px}
+.ins-kpi .lbl{font-size:10px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.ins-kpi .val{font-size:18px;font-weight:700;margin-top:3px}
+.ins-kpi .chg{font-size:12px;font-weight:600;margin-top:2px}
+.ins-kpi .chg.up{color:#059669}.ins-kpi .chg.dn{color:#dc2626}.ins-kpi .chg.nt{color:#9ca3af}
+.ins-level{margin-bottom:24px}
+.ins-level-hdr{font-size:13px;font-weight:700;color:#374151;margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ins-level-hdr .pill{font-size:10px;font-weight:600;background:#f3f4f6;color:#6b7280;border-radius:20px;padding:2px 8px}
+.ins-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ins-half{background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
+.ins-half-hdr{padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;border-bottom:1px solid #e5e7eb}
+.ins-half-hdr.gain{background:#f0fdf4;color:#15803d}
+.ins-half-hdr.loss{background:#fff7f7;color:#b91c1c}
+.ins-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid #f9fafb;cursor:pointer;transition:background .12s}
+.ins-row:last-child{border-bottom:none}
+.ins-row:hover{background:#f5f3ff}
+.ins-row .iname{flex:1;font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ins-row .imetrics{display:flex;gap:6px;flex-shrink:0}
+.ins-chip{font-size:11px;font-weight:600;padding:2px 7px;border-radius:6px;white-space:nowrap}
+.ins-chip.up-s{background:#d1fae5;color:#065f46}
+.ins-chip.dn-s{background:#fee2e2;color:#991b1b}
+.ins-chip.up-m{background:#dbeafe;color:#1e40af}
+.ins-chip.dn-m{background:#fef3c7;color:#92400e}
+.ins-chip.nt{background:#f3f4f6;color:#9ca3af}
+.ins-sub{font-size:10px;color:#9ca3af}
+.drill-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:14px;flex-wrap:wrap}
+.bc-item{color:#4f46e5;cursor:pointer;font-weight:600}
+.bc-item:hover{text-decoration:underline}
+.bc-sep{color:#9ca3af}
+.bc-cur{color:#111;font-weight:600}
+.no-data{text-align:center;padding:32px;font-size:12px;color:#9ca3af}
+.sec-sub-hdr{font-size:12px;font-weight:600;color:#374151;margin:14px 0 6px}
 </style>
 </head>
 <body>
@@ -78,8 +133,7 @@ tr:nth-child(even) td{background:#f9fafb}
 
   <!-- WOW -->
   <div class="section-title-wow">
-    <span style="font-size:22px">📅</span>
-    <h2>Week on Week View</h2>
+    <span style="font-size:22px">📅</span><h2>Week on Week View</h2>
     <span class="stbadge" id="wow-info">Loading…</span>
   </div>
   <div class="kpis">
@@ -107,26 +161,27 @@ tr:nth-child(even) td{background:#f9fafb}
     </div>
   </div>
   <div class="tabs">
-    <button class="tab active" id="w-tab-charts" onclick="setTab('w','charts')">📊 Charts</button>
-    <button class="tab" id="w-tab-summary" onclick="setTab('w','summary')">📋 Summary</button>
-    <button class="tab" id="w-tab-skus" onclick="setTab('w','skus')">🔍 SKU Detail</button>
+    <button class="tab active" id="w-tab-charts"   onclick="setTab('w','charts')">📊 Charts</button>
+    <button class="tab"        id="w-tab-summary"  onclick="setTab('w','summary')">📋 Summary</button>
+    <button class="tab"        id="w-tab-skus"     onclick="setTab('w','skus')">🔍 SKU Detail</button>
+    <button class="tab"        id="w-tab-insights" onclick="setTab('w','insights')">💡 Insights</button>
   </div>
-  <div id="w-pane-charts" class="card"><div class="chart-wrap"><canvas id="w-chart"></canvas></div></div>
-  <div id="w-pane-summary" class="card" style="display:none;padding:0;overflow:hidden"><table id="w-summary-table"></table></div>
-  <div id="w-pane-skus" class="card" style="display:none;padding:0;overflow:hidden">
+  <div id="w-pane-charts"   class="card"><div class="chart-wrap"><canvas id="w-chart"></canvas></div></div>
+  <div id="w-pane-summary"  class="card" style="display:none;padding:0;overflow:hidden"><table id="w-summary-table"></table></div>
+  <div id="w-pane-skus"     class="card" style="display:none;padding:0;overflow:hidden">
     <div style="padding:8px 12px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between">
       <span style="font-size:12px;font-weight:600">SKUs — worst margin first</span>
       <span style="font-size:11px;color:#9ca3af" id="w-sku-count"></span>
     </div>
     <div class="scroll-table"><table id="w-sku-table"></table></div>
   </div>
+  <div id="w-pane-insights" class="card" style="display:none"><div class="ins-wrap" id="w-ins-content"></div></div>
 
   <hr class="divider"/>
 
   <!-- MOM -->
   <div class="section-title-mom">
-    <span style="font-size:22px">📆</span>
-    <h2>Month on Month View</h2>
+    <span style="font-size:22px">📆</span><h2>Month on Month View</h2>
     <span class="stbadge" id="mom-info">Loading…</span>
   </div>
   <div class="kpis">
@@ -154,19 +209,21 @@ tr:nth-child(even) td{background:#f9fafb}
     </div>
   </div>
   <div class="tabs">
-    <button class="tab active" id="m-tab-charts" onclick="setTab('m','charts')">📊 Charts</button>
-    <button class="tab" id="m-tab-summary" onclick="setTab('m','summary')">📋 Summary</button>
-    <button class="tab" id="m-tab-skus" onclick="setTab('m','skus')">🔍 SKU Detail</button>
+    <button class="tab active" id="m-tab-charts"   onclick="setTab('m','charts')">📊 Charts</button>
+    <button class="tab"        id="m-tab-summary"  onclick="setTab('m','summary')">📋 Summary</button>
+    <button class="tab"        id="m-tab-skus"     onclick="setTab('m','skus')">🔍 SKU Detail</button>
+    <button class="tab"        id="m-tab-insights" onclick="setTab('m','insights')">💡 Insights</button>
   </div>
-  <div id="m-pane-charts" class="card"><div class="chart-wrap"><canvas id="m-chart"></canvas></div></div>
-  <div id="m-pane-summary" class="card" style="display:none;padding:0;overflow:hidden"><table id="m-summary-table"></table></div>
-  <div id="m-pane-skus" class="card" style="display:none;padding:0;overflow:hidden">
+  <div id="m-pane-charts"   class="card"><div class="chart-wrap"><canvas id="m-chart"></canvas></div></div>
+  <div id="m-pane-summary"  class="card" style="display:none;padding:0;overflow:hidden"><table id="m-summary-table"></table></div>
+  <div id="m-pane-skus"     class="card" style="display:none;padding:0;overflow:hidden">
     <div style="padding:8px 12px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between">
       <span style="font-size:12px;font-weight:600">SKUs — worst margin first</span>
       <span style="font-size:11px;color:#9ca3af" id="m-sku-count"></span>
     </div>
     <div class="scroll-table"><table id="m-sku-table"></table></div>
   </div>
+  <div id="m-pane-insights" class="card" style="display:none"><div class="ins-wrap" id="m-ins-content"></div></div>
 </div>
 
 <div id="err-screen" style="display:none;max-width:480px;margin:80px auto;text-align:center">
@@ -185,447 +242,568 @@ var PROXIES   = ["https://corsproxy.io/?","https://api.allorigins.win/raw?url="]
 var COLORS    = ["#6366f1","#f59e0b","#10b981","#ef4444","#8b5cf6","#ec4899","#14b8a6","#f97316","#3b82f6","#84cc16","#e11d48","#0ea5e9"];
 var MONTH_ORDER = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
 
-var wData = [], mData = [];
-var wChart = null, mChart = null;
+var wData=[], mData=[];
+var wChart=null, mChart=null;
+
+// ── PERIOD CONTEXT (computed once at load) ────────────────────────────────────
+// Week: Mon=1 … Sun=7; today is Thu Feb 26 2026 → day 4 of 7
+var PC = (function(){
+  var now = new Date();
+  // Week fraction: JS getDay() → 0=Sun,1=Mon…6=Sat. Map to Mon-based 1-7.
+  var jsDay = now.getDay(); // 0-6
+  var monDay = jsDay === 0 ? 7 : jsDay; // Mon=1…Sun=7
+  var wFrac = monDay / 7;
+  var wComplete = monDay === 7; // Sunday = week done
+
+  // Month fraction
+  var day = now.getDate();
+  var daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+  var mFrac = day / daysInMonth;
+  var mComplete = day === daysInMonth;
+
+  return {
+    wDay: monDay, wTotal: 7, wFrac: wFrac, wComplete: wComplete,
+    mDay: day, mTotal: daysInMonth, mFrac: mFrac, mComplete: mComplete,
+    today: now.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})
+  };
+})();
+
+// projection mode per section: "C" = comparable, "A" = projected
+var PROJ = {w:"C", m:"C"};
+
 var S = {
-  w: {view:"category", metric:"margin", selected:[], focusIdx:-1},
-  m: {view:"category", metric:"margin", selected:[], focusIdx:-1}
+  w:{view:"category",metric:"margin",selected:[],focusIdx:-1,ins:{level:"category",cat:null,brand:null}},
+  m:{view:"category",metric:"margin",selected:[],focusIdx:-1,ins:{level:"category",cat:null,brand:null}}
 };
 
 // ── FORMATTERS ────────────────────────────────────────────────────────────────
-function clean(v) { return parseFloat(String(v).replace(/,/g,"").replace(/%/g,"")) || 0; }
-function INR(v) { return "₹" + Math.abs(v).toLocaleString("en-IN",{maximumFractionDigits:0}); }
-function fmtVal(v) {
-  if (v == null) return null;
-  var a = Math.abs(v), s = v < 0 ? "-" : "";
-  if (a >= 100000) return s + "₹" + (a/100000).toFixed(1) + "L";
-  if (a >= 1000)   return s + "₹" + (a/1000).toFixed(1) + "K";
-  return s + "₹" + a.toFixed(0);
+function clean(v){return parseFloat(String(v).replace(/,/g,"").replace(/%/g,""))||0;}
+function INR(v){return "₹"+Math.abs(v).toLocaleString("en-IN",{maximumFractionDigits:0});}
+function fmtVal(v){
+  if(v==null)return null;
+  var a=Math.abs(v),s=v<0?"-":"";
+  if(a>=100000)return s+"₹"+(a/100000).toFixed(1)+"L";
+  if(a>=1000)return s+"₹"+(a/1000).toFixed(1)+"K";
+  return s+"₹"+a.toFixed(0);
 }
-function fmtPct(v) { return v == null ? null : v.toFixed(1) + "%"; }
-function badge(v) {
-  var c = v>=15?"bg":v>=5?"by":v>=0?"bo":"br";
-  return '<span class="badge ' + c + '">' + v.toFixed(1) + '%</span>';
+function fmtPct(v){return v==null?null:v.toFixed(1)+"%";}
+function badge(v){
+  var c=v>=15?"bg":v>=5?"by":v>=0?"bo":"br";
+  return'<span class="badge '+c+'">'+v.toFixed(1)+'%</span>';
 }
-function monthSortKey(l) {
-  var p = l.trim().split(/[\s']+/);
-  var m = MONTH_ORDER[p[0]] || 0;
-  var y = parseInt(p[1] || "0");
-  return (y < 50 ? 2000+y : 1900+y) * 100 + m;
+function monthSortKey(l){
+  var p=l.trim().split(/[\s']+/);
+  var m=MONTH_ORDER[p[0]]||0,y=parseInt(p[1]||"0");
+  return(y<50?2000+y:1900+y)*100+m;
 }
 
 // ── CSV PARSER ────────────────────────────────────────────────────────────────
-function parseCSV(text, periodCol) {
-  var lines = text.trim().split("\n").filter(function(l) { return l.trim(); });
-  var hdrs = lines[0].split(",").map(function(h) { return h.trim().toLowerCase().replace(/"/g,""); });
-  function ix(h) { return hdrs.findIndex(function(x) { return x.includes(h); }); }
-  var iN=ix("item"), iS=ix("sku"), iC=ix("category"), iB=ix("brand"),
-      iQ=ix("qty"), iCo=ix("total cost"), iSa=ix("total sales"),
-      iP=ix("profit"), iM=ix("margin"), iPer=ix(periodCol.toLowerCase());
-  var rows = [];
-  for (var i = 1; i < lines.length; i++) {
-    var l = lines[i], c = [], cur = "", inQ = false;
-    for (var j = 0; j < l.length; j++) {
-      if (l[j] === '"') inQ = !inQ;
-      else if (l[j] === ',' && !inQ) { c.push(cur.trim()); cur = ""; }
-      else cur += l[j];
+function parseCSV(text,periodCol){
+  var lines=text.trim().split("\n").filter(function(l){return l.trim();});
+  var hdrs=lines[0].split(",").map(function(h){return h.trim().toLowerCase().replace(/"/g,"");});
+  function ix(h){return hdrs.findIndex(function(x){return x.includes(h);});}
+  var iN=ix("item"),iS=ix("sku"),iC=ix("category"),iB=ix("brand"),
+      iQ=ix("qty"),iCo=ix("total cost"),iSa=ix("total sales"),
+      iP=ix("profit"),iM=ix("margin"),iPer=ix(periodCol.toLowerCase());
+  var rows=[];
+  for(var i=1;i<lines.length;i++){
+    var l=lines[i],c=[],cur="",inQ=false;
+    for(var j=0;j<l.length;j++){
+      if(l[j]==='"')inQ=!inQ;
+      else if(l[j]===','&&!inQ){c.push(cur.trim());cur="";}
+      else cur+=l[j];
     }
     c.push(cur.trim());
-    if (c.length < 5) continue;
-    var r = {
-      name:     (c[iN]  || "").replace(/"/g,"").trim(),
-      sku:      (c[iS]  || "").replace(/"/g,"").trim(),
-      category: (c[iC]  || "").replace(/"/g,"").trim(),
-      brand:    (c[iB]  || "").replace(/"/g,"").trim(),
-      qty:      clean(c[iQ]),
-      cost:     clean(c[iCo]),
-      sales:    clean(c[iSa]),
-      profit:   clean(c[iP]),
-      margin:   clean(c[iM]),
-      period:   (c[iPer] || "").replace(/"/g,"").trim()
-    };
-    if (r.name && r.category && r.period) rows.push(r);
+    if(c.length<5)continue;
+    var r={name:(c[iN]||"").replace(/"/g,"").trim(),sku:(c[iS]||"").replace(/"/g,"").trim(),
+      category:(c[iC]||"").replace(/"/g,"").trim(),brand:(c[iB]||"").replace(/"/g,"").trim(),
+      qty:clean(c[iQ]),cost:clean(c[iCo]),sales:clean(c[iSa]),profit:clean(c[iP]),margin:clean(c[iM]),
+      period:(c[iPer]||"").replace(/"/g,"").trim()};
+    if(r.name&&r.category&&r.period)rows.push(r);
   }
   return rows;
 }
 
-// ── FETCH WITH PROXY FALLBACK ─────────────────────────────────────────────────
-async function fetchWithTimeout(url, ms) {
-  var ctrl = new AbortController();
-  var tid = setTimeout(function() { ctrl.abort(); }, ms);
-  try {
-    var r = await fetch(url, {signal: ctrl.signal});
-    clearTimeout(tid);
-    return r;
-  } catch (err) {
-    clearTimeout(tid);
-    throw err;
+// ── FETCH ─────────────────────────────────────────────────────────────────────
+async function fetchWithTimeout(url,ms){
+  var ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},ms);
+  try{var r=await fetch(url,{signal:ctrl.signal});clearTimeout(tid);return r;}
+  catch(e){clearTimeout(tid);throw e;}
+}
+async function fetchCSV(url){
+  try{var r=await fetchWithTimeout(url,5000);if(r.ok)return await r.text();}catch(e){}
+  for(var i=0;i<PROXIES.length;i++){
+    try{var r2=await fetchWithTimeout(PROXIES[i]+encodeURIComponent(url),8000);if(r2.ok)return await r2.text();}catch(e){}
   }
+  throw new Error("All fetch attempts failed");
 }
 
-async function fetchCSV(url) {
-  // 1. Try direct
-  try {
-    var r = await fetchWithTimeout(url, 5000);
-    if (r.ok) return await r.text();
-  } catch (e1) { /* fall through */ }
-
-  // 2. Try each proxy
-  for (var pi = 0; pi < PROXIES.length; pi++) {
-    try {
-      var proxyUrl = PROXIES[pi] + encodeURIComponent(url);
-      var r2 = await fetchWithTimeout(proxyUrl, 8000);
-      if (r2.ok) return await r2.text();
-    } catch (e2) { /* try next */ }
-  }
-
-  throw new Error("All fetch attempts failed for: " + url);
-}
-
-// ── LOAD DATA ─────────────────────────────────────────────────────────────────
-async function loadAll() {
-  document.getElementById("loading").style.display = "block";
-  document.getElementById("dashboard").style.display = "none";
-  document.getElementById("err-screen").style.display = "none";
-
-  var wOk = false, mOk = false;
-
-  var wPromise = fetchCSV(WEEK_URL).then(function(text) {
-    wData = parseCSV(text, "week");
-    if (wData.length) {
-      wOk = true;
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("dashboard").style.display = "block";
-      document.getElementById("wow-info").textContent = wData.length + " rows · " + uniqueCount(wData,"sku") + " SKUs";
+// ── LOAD ──────────────────────────────────────────────────────────────────────
+async function loadAll(){
+  document.getElementById("loading").style.display="block";
+  document.getElementById("dashboard").style.display="none";
+  document.getElementById("err-screen").style.display="none";
+  var wOk=false,mOk=false;
+  var wp=fetchCSV(WEEK_URL).then(function(t){
+    wData=parseCSV(t,"week");
+    if(wData.length){wOk=true;
+      document.getElementById("loading").style.display="none";
+      document.getElementById("dashboard").style.display="block";
+      document.getElementById("wow-info").textContent=wData.length+" rows · "+uniqueCount(wData,"sku")+" SKUs";
       renderSection("w");
     }
-  }).catch(function(e) { console.warn("WoW failed:", e.message); });
-
-  var mPromise = fetchCSV(MONTH_URL).then(function(text) {
-    mData = parseCSV(text, "month");
-    if (mData.length) {
-      mOk = true;
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("dashboard").style.display = "block";
-      document.getElementById("mom-info").textContent = mData.length + " rows · " + uniqueCount(mData,"sku") + " SKUs";
-      document.getElementById("data-info").textContent = "Week & Month tabs loaded";
+  }).catch(function(e){console.warn("WoW:",e.message);});
+  var mp=fetchCSV(MONTH_URL).then(function(t){
+    mData=parseCSV(t,"month");
+    if(mData.length){mOk=true;
+      document.getElementById("loading").style.display="none";
+      document.getElementById("dashboard").style.display="block";
+      document.getElementById("mom-info").textContent=mData.length+" rows · "+uniqueCount(mData,"sku")+" SKUs";
+      document.getElementById("data-info").textContent="Week & Month data loaded · As of "+PC.today;
       renderSection("m");
     }
-  }).catch(function(e) { console.warn("MoM failed:", e.message); });
-
-  await Promise.all([wPromise, mPromise]);
-
-  if (!wOk && !mOk) {
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("err-screen").style.display = "block";
-    document.getElementById("err-msg").textContent = "Could not load data. Please try refreshing.";
+  }).catch(function(e){console.warn("MoM:",e.message);});
+  await Promise.all([wp,mp]);
+  if(!wOk&&!mOk){
+    document.getElementById("loading").style.display="none";
+    document.getElementById("err-screen").style.display="block";
+    document.getElementById("err-msg").textContent="Could not load data.";
   }
 }
+function uniqueCount(arr,key){return new Set(arr.map(function(d){return d[key];})).size;}
 
-function uniqueCount(arr, key) {
-  return new Set(arr.map(function(d) { return d[key]; })).size;
+// ── STATE ─────────────────────────────────────────────────────────────────────
+function getData(sec){return sec==="w"?wData:mData;}
+function setView(sec,v){
+  S[sec].view=v;S[sec].selected=[];
+  document.getElementById(sec+"-btn-cat").className=v==="category"?"ap":"";
+  document.getElementById(sec+"-btn-brand").className=v==="brand"?"ap":"";
+  document.getElementById(sec+"-search").placeholder="Search "+v+"s…";
+  updateTags(sec);renderSection(sec);
 }
-
-// ── STATE CONTROLS ────────────────────────────────────────────────────────────
-function getData(sec) { return sec === "w" ? wData : mData; }
-
-function setView(sec, v) {
-  S[sec].view = v;
-  S[sec].selected = [];
-  document.getElementById(sec+"-btn-cat").className   = v === "category" ? "ap" : "";
-  document.getElementById(sec+"-btn-brand").className = v === "brand"    ? "ap" : "";
-  document.getElementById(sec+"-search").placeholder  = "Search " + v + "s…";
-  updateTags(sec);
-  renderSection(sec);
-}
-
-function setMetric(sec, m) {
-  S[sec].metric = m;
-  ["margin","profit","sales","combo"].forEach(function(x) {
-    document.getElementById(sec+"-btn-"+x).className = x === m ? "aa" : "";
+function setMetric(sec,m){
+  S[sec].metric=m;
+  ["margin","profit","sales","combo"].forEach(function(x){
+    document.getElementById(sec+"-btn-"+x).className=x===m?"aa":"";
   });
   renderSection(sec);
 }
-
-function setTab(sec, t) {
-  ["charts","summary","skus"].forEach(function(x) {
-    document.getElementById(sec+"-tab-"+x).className  = "tab" + (x === t ? " active" : "");
-    document.getElementById(sec+"-pane-"+x).style.display = x === t ? "block" : "none";
+function setTab(sec,t){
+  ["charts","summary","skus","insights"].forEach(function(x){
+    document.getElementById(sec+"-tab-"+x).className="tab"+(x===t?" active":"");
+    document.getElementById(sec+"-pane-"+x).style.display=x===t?"block":"none";
   });
-  renderSection(sec);
+  if(t==="insights")renderInsights(sec);
+  else renderSection(sec);
+}
+function setProj(sec,mode){
+  PROJ[sec]=mode;
+  renderInsights(sec);
 }
 
 // ── SEARCH ────────────────────────────────────────────────────────────────────
-function getDims(sec) {
-  var key = S[sec].view === "category" ? "category" : "brand";
-  return [...new Set(getData(sec).map(function(d) { return d[key]; }))].filter(Boolean).sort();
+function getDims(sec){
+  var key=S[sec].view==="category"?"category":"brand";
+  return[...new Set(getData(sec).map(function(d){return d[key];}))].filter(Boolean).sort();
 }
-
-function getFiltered(sec) {
-  var data = getData(sec), st = S[sec];
-  var key = st.view === "category" ? "category" : "brand";
-  if (!st.selected.length) return data;
-  return data.filter(function(d) { return st.selected.indexOf(d[key]) >= 0; });
+function getFiltered(sec){
+  var data=getData(sec),st=S[sec],key=st.view==="category"?"category":"brand";
+  if(!st.selected.length)return data;
+  return data.filter(function(d){return st.selected.indexOf(d[key])>=0;});
 }
-
-function getActiveDims(sec) {
-  var all = getDims(sec), st = S[sec];
-  return st.selected.length ? st.selected.filter(function(d) { return all.indexOf(d) >= 0; }) : all;
+function getActiveDims(sec){
+  var all=getDims(sec),st=S[sec];
+  return st.selected.length?st.selected.filter(function(d){return all.indexOf(d)>=0;}):all;
 }
-
-function openDrop(sec) { onSearch(sec); }
-
-function onSearch(sec) {
-  var q = document.getElementById(sec+"-search").value;
-  var all = getDims(sec).filter(function(d) { return S[sec].selected.indexOf(d) < 0; });
-  var matches = q.trim() === "" ? all : all.filter(function(d) { return d.toLowerCase().includes(q.toLowerCase()); });
-  S[sec].focusIdx = -1;
-  renderDrop(sec, matches, q);
+function openDrop(sec){onSearch(sec);}
+function onSearch(sec){
+  var q=document.getElementById(sec+"-search").value;
+  var all=getDims(sec).filter(function(d){return S[sec].selected.indexOf(d)<0;});
+  var matches=q.trim()===""?all:all.filter(function(d){return d.toLowerCase().includes(q.toLowerCase());});
+  S[sec].focusIdx=-1;renderDrop(sec,matches,q);
 }
-
-function renderDrop(sec, items, q) {
-  var drop = document.getElementById(sec+"-drop");
-  if (!items.length) { drop.style.display = "none"; return; }
-  drop.innerHTML = items.map(function(d, i) {
-    var label = q && q.trim()
-      ? d.replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),
-          '<span style="color:#4f46e5;font-weight:700">$1</span>')
-      : d;
-    return '<div class="drop-item" id="'+sec+'-di-'+i+'" onclick="selectDim(\''+sec+'\',\''+escQ(d)+'\')">'+label+'</div>';
-  }).join("");
-  drop.style.display = "block";
+function renderDrop(sec,items,q){
+  var drop=document.getElementById(sec+"-drop");
+  if(!items.length){drop.style.display="none";return;}
+  drop.innerHTML=items.map(function(d,i){
+    var label=q&&q.trim()?d.replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),'<span style="color:#4f46e5;font-weight:700">$1</span>'):d;
+    return'<div class="drop-item" id="'+sec+'-di-'+i+'" onclick="selectDim(\''+sec+'\',\''+escQ(d)+'\')">'+label+'</div>';
+  }).join("");drop.style.display="block";
 }
-
-function escQ(s) { return s.replace(/\\/g,"\\\\").replace(/'/g,"\\'"); }
-
-function onKey(sec, e) {
-  var drop = document.getElementById(sec+"-drop");
-  var items = drop.querySelectorAll(".drop-item");
-  var st = S[sec];
-  if (e.key === "ArrowDown") {
-    e.preventDefault();
-    st.focusIdx = Math.min(st.focusIdx+1, items.length-1);
-    highlightDrop(items, st.focusIdx);
-  } else if (e.key === "ArrowUp") {
-    e.preventDefault();
-    st.focusIdx = Math.max(st.focusIdx-1, 0);
-    highlightDrop(items, st.focusIdx);
-  } else if (e.key === "Enter") {
-    e.preventDefault();
-    if (items.length === 1) {
-      items[0].click();
-    } else if (st.focusIdx >= 0 && items[st.focusIdx]) {
-      items[st.focusIdx].click();
-    }
-  } else if (e.key === "Escape") {
-    drop.style.display = "none";
-  } else if (e.key === "Backspace") {
-    var inp = document.getElementById(sec+"-search");
-    if (inp.value === "" && st.selected.length) {
-      st.selected.pop();
-      updateTags(sec);
-      renderSection(sec);
-      onSearch(sec);
-    }
+function escQ(s){return s.replace(/\\/g,"\\\\").replace(/'/g,"\\'");}
+function onKey(sec,e){
+  var drop=document.getElementById(sec+"-drop"),items=drop.querySelectorAll(".drop-item"),st=S[sec];
+  if(e.key==="ArrowDown"){e.preventDefault();st.focusIdx=Math.min(st.focusIdx+1,items.length-1);highlightDrop(items,st.focusIdx);}
+  else if(e.key==="ArrowUp"){e.preventDefault();st.focusIdx=Math.max(st.focusIdx-1,0);highlightDrop(items,st.focusIdx);}
+  else if(e.key==="Enter"){e.preventDefault();if(items.length===1)items[0].click();else if(st.focusIdx>=0&&items[st.focusIdx])items[st.focusIdx].click();}
+  else if(e.key==="Escape")drop.style.display="none";
+  else if(e.key==="Backspace"){
+    var inp=document.getElementById(sec+"-search");
+    if(inp.value===""&&st.selected.length){st.selected.pop();updateTags(sec);renderSection(sec);onSearch(sec);}
   }
 }
-
-function highlightDrop(items, idx) {
-  items.forEach(function(el, i) { el.classList.toggle("focused", i === idx); });
-  if (items[idx]) items[idx].scrollIntoView({block:"nearest"});
+function highlightDrop(items,idx){
+  items.forEach(function(el,i){el.classList.toggle("focused",i===idx);});
+  if(items[idx])items[idx].scrollIntoView({block:"nearest"});
 }
-
-function selectDim(sec, d) {
-  if (S[sec].selected.indexOf(d) < 0) S[sec].selected.push(d);
-  document.getElementById(sec+"-search").value = "";
-  document.getElementById(sec+"-drop").style.display = "none";
-  S[sec].focusIdx = -1;
-  updateTags(sec);
-  renderSection(sec);
+function selectDim(sec,d){
+  if(S[sec].selected.indexOf(d)<0)S[sec].selected.push(d);
+  document.getElementById(sec+"-search").value="";
+  document.getElementById(sec+"-drop").style.display="none";
+  S[sec].focusIdx=-1;updateTags(sec);renderSection(sec);
   document.getElementById(sec+"-search").focus();
 }
-
-function removeDim(sec, d) {
-  S[sec].selected = S[sec].selected.filter(function(x) { return x !== d; });
-  updateTags(sec);
-  renderSection(sec);
-}
-
-function clearAll(sec) {
-  S[sec].selected = [];
-  document.getElementById(sec+"-search").value = "";
-  updateTags(sec);
-  renderSection(sec);
-}
-
-function updateTags(sec) {
-  var sel = S[sec].selected;
-  document.getElementById(sec+"-tags").innerHTML = sel.map(function(d) {
-    return '<span class="tag">' + d + '<span class="tag-x" onclick="removeDim(\''+sec+'\',\''+escQ(d)+'\')">×</span></span>';
+function removeDim(sec,d){S[sec].selected=S[sec].selected.filter(function(x){return x!==d;});updateTags(sec);renderSection(sec);}
+function clearAll(sec){S[sec].selected=[];document.getElementById(sec+"-search").value="";updateTags(sec);renderSection(sec);}
+function updateTags(sec){
+  var sel=S[sec].selected;
+  document.getElementById(sec+"-tags").innerHTML=sel.map(function(d){
+    return'<span class="tag">'+d+'<span class="tag-x" onclick="removeDim(\''+sec+'\',\''+escQ(d)+'\')">×</span></span>';
   }).join("");
-  document.getElementById(sec+"-clear").style.display = sel.length ? "inline" : "none";
+  document.getElementById(sec+"-clear").style.display=sel.length?"inline":"none";
 }
-
-document.addEventListener("click", function(e) {
-  ["w","m"].forEach(function(sec) {
-    var inp  = document.getElementById(sec+"-search");
-    var drop = document.getElementById(sec+"-drop");
-    if (inp && drop && !inp.contains(e.target) && !drop.contains(e.target)) {
-      drop.style.display = "none";
-    }
+document.addEventListener("click",function(e){
+  ["w","m"].forEach(function(sec){
+    var inp=document.getElementById(sec+"-search"),drop=document.getElementById(sec+"-drop");
+    if(inp&&drop&&!inp.contains(e.target)&&!drop.contains(e.target))drop.style.display="none";
   });
 });
 
 // ── CHART HELPERS ─────────────────────────────────────────────────────────────
-function dlBar(color) {
-  return {display:true,anchor:"end",align:"top",offset:2,color:color,font:{size:10,weight:"600"},
-    formatter:function(v) { return v == null ? null : fmtVal(v); }};
-}
-function dlLine(color) {
-  return {display:true,anchor:"end",align:"top",offset:8,color:color,font:{size:10,weight:"600"},
-    formatter:function(v) { return v == null ? null : fmtPct(v); }};
-}
+function dlBar(col){return{display:true,anchor:"end",align:"top",offset:2,color:col,font:{size:10,weight:"600"},formatter:function(v){return v==null?null:fmtVal(v);}};}
+function dlLine(col){return{display:true,anchor:"end",align:"top",offset:8,color:col,font:{size:10,weight:"600"},formatter:function(v){return v==null?null:fmtPct(v);}};}
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
-function renderSection(sec) {
-  var st = S[sec];
-  var dimKey = st.view === "category" ? "category" : "brand";
-  var dims = getActiveDims(sec);
-  var fd   = getFiltered(sec);
+// ── RENDER CHARTS/TABLES ──────────────────────────────────────────────────────
+function renderSection(sec){
+  var st=S[sec],dimKey=st.view==="category"?"category":"brand";
+  var dims=getActiveDims(sec),fd=getFiltered(sec);
+  var totS=0,totP=0;fd.forEach(function(r){totS+=r.sales;totP+=r.profit;});
+  var totM=totS?totP/totS*100:0;
+  document.getElementById(sec+"-kpi-sales").textContent=INR(totS);
+  document.getElementById(sec+"-kpi-profit").textContent=(totP<0?"-":"")+INR(totP);
+  document.getElementById(sec+"-kpi-profit").className="kpi-val"+(totP<0?" neg":"");
+  document.getElementById(sec+"-kpi-margin").textContent=totM.toFixed(1)+"%";
+  document.getElementById(sec+"-kpi-margin").className="kpi-val"+(totM<0?" neg":"");
 
-  // KPIs
-  var totS = 0, totP = 0;
-  fd.forEach(function(r) { totS += r.sales; totP += r.profit; });
-  var totM = totS ? totP/totS*100 : 0;
-  document.getElementById(sec+"-kpi-sales").textContent   = INR(totS);
-  document.getElementById(sec+"-kpi-profit").textContent  = (totP<0?"-":"") + INR(totP);
-  document.getElementById(sec+"-kpi-profit").className    = "kpi-val" + (totP<0?" neg":"");
-  document.getElementById(sec+"-kpi-margin").textContent  = totM.toFixed(1) + "%";
-  document.getElementById(sec+"-kpi-margin").className    = "kpi-val" + (totM<0?" neg":"");
-
-  // Periods
-  var pSet = {};
-  fd.forEach(function(d) { pSet[d.period] = true; });
-  var periods = Object.keys(pSet).sort(function(a,b) {
-    if (sec === "w") return parseInt(a.replace("W","")) - parseInt(b.replace("W",""));
-    return monthSortKey(a) - monthSortKey(b);
+  var pSet={};fd.forEach(function(d){pSet[d.period]=true;});
+  var periods=Object.keys(pSet).sort(function(a,b){
+    if(sec==="w")return parseInt(a.replace("W",""))-parseInt(b.replace("W",""));
+    return monthSortKey(a)-monthSortKey(b);
   });
 
-  // Per-dim values
-  var chartData = periods.map(function(p) {
-    var row = {};
-    dims.forEach(function(dim) {
-      var rows = fd.filter(function(d) { return d[dimKey]===dim && d.period===p; });
-      if (!rows.length) { row[dim] = null; return; }
-      var s=0, pr=0;
-      rows.forEach(function(r) { s+=r.sales; pr+=r.profit; });
-      row[dim] = st.metric==="margin"  ? parseFloat((s?pr/s*100:0).toFixed(2))
-               : st.metric==="profit"  ? parseFloat(pr.toFixed(2))
-               :                         parseFloat(s.toFixed(2));
-    });
-    return row;
+  var chartData=periods.map(function(p){
+    var row={};
+    dims.forEach(function(dim){
+      var rows=fd.filter(function(d){return d[dimKey]===dim&&d.period===p;});
+      if(!rows.length){row[dim]=null;return;}
+      var s=0,pr=0;rows.forEach(function(r){s+=r.sales;pr+=r.profit;});
+      row[dim]=st.metric==="margin"?parseFloat((s?pr/s*100:0).toFixed(2))
+              :st.metric==="profit"?parseFloat(pr.toFixed(2)):parseFloat(s.toFixed(2));
+    });return row;
   });
 
-  // Destroy old chart
-  if (sec==="w" && wChart) { wChart.destroy(); wChart = null; }
-  if (sec==="m" && mChart) { mChart.destroy(); mChart = null; }
-  var ctx = document.getElementById(sec+"-chart").getContext("2d");
-  var nc;
+  if(sec==="w"&&wChart){wChart.destroy();wChart=null;}
+  if(sec==="m"&&mChart){mChart.destroy();mChart=null;}
+  var ctx=document.getElementById(sec+"-chart").getContext("2d"),nc;
 
-  var baseOpts = {
-    responsive:true, maintainAspectRatio:false,
-    layout:{padding:{top:40,right:16}},
-    plugins:{datalabels:{}, legend:{labels:{font:{size:11}}}}
-  };
-
-  if (st.metric === "combo") {
-    var salesData = periods.map(function(p) {
-      var rows = fd.filter(function(d) { return d.period===p; });
-      var s=0; rows.forEach(function(r) { s+=r.sales; }); return parseFloat(s.toFixed(2));
-    });
-    var marginData = periods.map(function(p) {
-      var rows = fd.filter(function(d) { return d.period===p; });
-      var s=0,pr=0; rows.forEach(function(r) { s+=r.sales; pr+=r.profit; });
-      return parseFloat((s?pr/s*100:0).toFixed(2));
-    });
-    nc = new Chart(ctx, {
-      type:"bar",
-      data:{labels:periods, datasets:[
-        {label:"Sales (₹)",data:salesData,backgroundColor:"#6366f1cc",borderColor:"#6366f1",borderWidth:1,borderRadius:3,yAxisID:"y",
-          datalabels:{display:true,anchor:"end",align:"top",offset:2,color:"#4338ca",font:{size:10,weight:"600"},formatter:function(v){return fmtVal(v);}}},
-        {label:"Margin %",data:marginData,type:"line",borderColor:"#f59e0b",backgroundColor:"#f59e0b22",borderWidth:2,pointRadius:5,pointBackgroundColor:"#f59e0b",tension:0.3,yAxisID:"y2",
-          datalabels:{display:true,anchor:"end",align:"top",offset:8,color:"#b45309",font:{size:10,weight:"600"},formatter:function(v){return fmtPct(v);}}}
-      ]},
-      options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:40,right:16}},
-        plugins:{datalabels:{},legend:{labels:{font:{size:11}}},
-          tooltip:{callbacks:{label:function(c){return c.dataset.yAxisID==="y2"?" "+c.dataset.label+": "+c.parsed.y.toFixed(1)+"%":" "+c.dataset.label+": "+INR(c.parsed.y);}}}},
-        scales:{x:{ticks:{font:{size:11}}},
-          y:{ticks:{font:{size:11},callback:function(v){return fmtVal(v);}},grid:{color:"#f0f0f0"},title:{display:true,text:"Sales",font:{size:10}}},
-          y2:{position:"right",ticks:{font:{size:11},callback:function(v){return v.toFixed(0)+"%";}},grid:{drawOnChartArea:false},title:{display:true,text:"Margin %",font:{size:10}}}}}
-    });
-  } else if (st.metric === "margin") {
-    nc = new Chart(ctx, {
-      type:"line",
-      data:{labels:periods, datasets:dims.map(function(dim,i){
-        var col=COLORS[i%COLORS.length];
-        return{label:dim,data:chartData.map(function(r){return r[dim];}),backgroundColor:col+"22",borderColor:col,borderWidth:2,pointRadius:5,pointBackgroundColor:col,tension:0.3,fill:false,datalabels:dlLine(col)};
-      })},
-      options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:40,right:16}},
-        plugins:{datalabels:{},legend:{labels:{font:{size:11}}},tooltip:{callbacks:{label:function(c){return" "+c.dataset.label+": "+c.parsed.y.toFixed(1)+"%";}}}},
-        scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11},callback:function(v){return v.toFixed(0)+"%";}},grid:{color:"#f0f0f0"}}}}
-    });
+  if(st.metric==="combo"){
+    var sD=periods.map(function(p){var rows=fd.filter(function(d){return d.period===p;});var s=0;rows.forEach(function(r){s+=r.sales;});return parseFloat(s.toFixed(2));});
+    var mD=periods.map(function(p){var rows=fd.filter(function(d){return d.period===p;});var s=0,pr=0;rows.forEach(function(r){s+=r.sales;pr+=r.profit;});return parseFloat((s?pr/s*100:0).toFixed(2));});
+    nc=new Chart(ctx,{type:"bar",data:{labels:periods,datasets:[
+      {label:"Sales (₹)",data:sD,backgroundColor:"#6366f1cc",borderColor:"#6366f1",borderWidth:1,borderRadius:3,yAxisID:"y",datalabels:{display:true,anchor:"end",align:"top",offset:2,color:"#4338ca",font:{size:10,weight:"600"},formatter:function(v){return fmtVal(v);}}},
+      {label:"Margin %",data:mD,type:"line",borderColor:"#f59e0b",backgroundColor:"#f59e0b22",borderWidth:2,pointRadius:5,pointBackgroundColor:"#f59e0b",tension:0.3,yAxisID:"y2",datalabels:{display:true,anchor:"end",align:"top",offset:8,color:"#b45309",font:{size:10,weight:"600"},formatter:function(v){return fmtPct(v);}}}
+    ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:40,right:16}},plugins:{datalabels:{},legend:{labels:{font:{size:11}}},tooltip:{callbacks:{label:function(c){return c.dataset.yAxisID==="y2"?" "+c.dataset.label+": "+c.parsed.y.toFixed(1)+"%":" "+c.dataset.label+": "+INR(c.parsed.y);}}}},scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11},callback:function(v){return fmtVal(v);}},grid:{color:"#f0f0f0"},title:{display:true,text:"Sales",font:{size:10}}},y2:{position:"right",ticks:{font:{size:11},callback:function(v){return v.toFixed(0)+"%";}},grid:{drawOnChartArea:false},title:{display:true,text:"Margin %",font:{size:10}}}}}});
+  } else if(st.metric==="margin"){
+    nc=new Chart(ctx,{type:"line",data:{labels:periods,datasets:dims.map(function(dim,i){var col=COLORS[i%COLORS.length];return{label:dim,data:chartData.map(function(r){return r[dim];}),backgroundColor:col+"22",borderColor:col,borderWidth:2,pointRadius:5,pointBackgroundColor:col,tension:0.3,fill:false,datalabels:dlLine(col)};})},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:40,right:16}},plugins:{datalabels:{},legend:{labels:{font:{size:11}}},tooltip:{callbacks:{label:function(c){return" "+c.dataset.label+": "+c.parsed.y.toFixed(1)+"%";}}}},scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11},callback:function(v){return v.toFixed(0)+"%";}},grid:{color:"#f0f0f0"}}}}});
   } else {
-    nc = new Chart(ctx, {
-      type:"bar",
-      data:{labels:periods, datasets:dims.map(function(dim,i){
-        var col=COLORS[i%COLORS.length];
-        return{label:dim,data:chartData.map(function(r){return r[dim];}),backgroundColor:col+"cc",borderColor:col,borderWidth:1,borderRadius:3,datalabels:dlBar(col)};
-      })},
-      options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:40,right:16}},
-        plugins:{datalabels:{},legend:{labels:{font:{size:11}}},tooltip:{callbacks:{label:function(c){return" "+c.dataset.label+": "+INR(c.parsed.y);}}}},
-        scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11},callback:function(v){return fmtVal(v);}},grid:{color:"#f0f0f0"}}}}
+    nc=new Chart(ctx,{type:"bar",data:{labels:periods,datasets:dims.map(function(dim,i){var col=COLORS[i%COLORS.length];return{label:dim,data:chartData.map(function(r){return r[dim];}),backgroundColor:col+"cc",borderColor:col,borderWidth:1,borderRadius:3,datalabels:dlBar(col)};})},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:40,right:16}},plugins:{datalabels:{},legend:{labels:{font:{size:11}}},tooltip:{callbacks:{label:function(c){return" "+c.dataset.label+": "+INR(c.parsed.y);}}}},scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11},callback:function(v){return fmtVal(v);}},grid:{color:"#f0f0f0"}}}}});
+  }
+  if(sec==="w")wChart=nc;else mChart=nc;
+
+  var sumData=dims.map(function(dim){
+    var rows=fd.filter(function(d){return d[dimKey]===dim;});
+    var s=0,p=0,c=0,q=0;rows.forEach(function(r){s+=r.sales;p+=r.profit;c+=r.cost;q+=r.qty;});
+    return{dim,s,p,c,q,m:s?p/s*100:0};
+  }).sort(function(a,b){return b.m-a.m;});
+  var dh=st.view==="category"?"Category":"Brand";
+  document.getElementById(sec+"-summary-table").innerHTML=
+    '<thead><tr><th>'+dh+'</th><th>Sales</th><th>Cost</th><th>Profit</th><th>Margin</th><th>Qty</th></tr></thead><tbody>'+
+    sumData.map(function(r){return'<tr><td style="font-weight:500">'+r.dim+'</td><td>'+INR(r.s)+'</td><td>'+INR(r.c)+'</td><td class="'+(r.p<0?"rd":"gn")+'">'+(r.p<0?"-":"")+INR(r.p)+'</td><td>'+badge(r.m)+'</td><td style="color:#6b7280">'+r.q+'</td></tr>';}).join("")+'</tbody>';
+
+  var skuMap={};
+  fd.forEach(function(d){
+    if(!skuMap[d.sku])skuMap[d.sku]={name:d.name,sku:d.sku,cat:d.category,brand:d.brand,s:0,p:0,c:0,q:0};
+    skuMap[d.sku].s+=d.sales;skuMap[d.sku].p+=d.profit;skuMap[d.sku].c+=d.cost;skuMap[d.sku].q+=d.qty;
+  });
+  var skus=Object.values(skuMap).map(function(r){return Object.assign({},r,{m:r.s?r.p/r.s*100:0});}).sort(function(a,b){return a.m-b.m;});
+  document.getElementById(sec+"-sku-count").textContent=skus.length+" SKUs";
+  document.getElementById(sec+"-sku-table").innerHTML=
+    '<thead><tr><th>Item</th><th>Category</th><th>Brand</th><th>Sales</th><th>Profit</th><th>Margin</th><th>Qty</th></tr></thead><tbody>'+
+    skus.map(function(r){return'<tr><td class="trunc" title="'+r.name+'">'+r.name+'</td><td style="color:#6b7280">'+r.cat+'</td><td style="color:#6b7280">'+r.brand+'</td><td>'+INR(r.s)+'</td><td class="'+(r.p<0?"rd":"gn")+'">'+(r.p<0?"-":"")+INR(r.p)+'</td><td>'+badge(r.m)+'</td><td style="color:#6b7280">'+r.q+'</td></tr>';}).join("")+'</tbody>';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── INSIGHTS ENGINE ───────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function getSortedPeriods(sec){
+  var data=getData(sec),pSet={};
+  data.forEach(function(d){pSet[d.period]=true;});
+  return Object.keys(pSet).sort(function(a,b){
+    if(sec==="w")return parseInt(a.replace("W",""))-parseInt(b.replace("W",""));
+    return monthSortKey(a)-monthSortKey(b);
+  });
+}
+
+// Is the current (latest) period detected as partial?
+function isPartial(sec){
+  if(sec==="w")return !PC.wComplete;
+  return !PC.mComplete;
+}
+
+// Completion fraction of the current period
+function getFrac(sec){
+  return sec==="w"?PC.wFrac:PC.mFrac;
+}
+
+// For a given period's rows, apply adjustment factor to sales & profit (margin recalculated)
+// mode C: adjust PREV period DOWN to same fraction
+// mode A: adjust CUR period UP by 1/frac
+// Only scale Sales & Profit (additive). Margin recalculates naturally as Profit/Sales.
+// Cost & Qty scaled too as they're additive — margin itself is never directly touched.
+function adjustedRows(rows, factor){
+  return rows.map(function(r){
+    var s=r.sales*factor, p=r.profit*factor, c=r.cost*factor, q=r.qty*factor;
+    return Object.assign({},r,{sales:s, profit:p, cost:c, qty:q, margin:s?p/s*100:0});
+  });
+}
+
+function aggBy(rows, key){
+  var map={};
+  rows.forEach(function(d){
+    var k=d[key]||"(unknown)";
+    if(!map[k])map[k]={key:k,s:0,p:0,q:0};
+    map[k].s+=d.sales;map[k].p+=d.profit;map[k].q+=d.qty;
+  });
+  return Object.values(map).map(function(r){return Object.assign(r,{m:r.s?r.p/r.s*100:0});});
+}
+
+function adaptiveN(total){
+  if(total<=4)return total;
+  if(total<=9)return 3;
+  if(total<=19)return 5;
+  return 10;
+}
+
+// Core mover builder — handles both projection modes
+function buildMovers(data, dimKey, curPeriod, prevPeriod, filterKey, filterVal, sec){
+  var frac=getFrac(sec);
+  var partial=isPartial(sec);
+  var mode=PROJ[sec];
+
+  function filterRows(period){
+    return data.filter(function(d){
+      if(d.period!==period)return false;
+      if(filterKey&&filterVal&&d[filterKey]!==filterVal)return false;
+      return true;
     });
   }
 
-  if (sec==="w") wChart=nc; else mChart=nc;
+  var curRows=filterRows(curPeriod);
+  var prevRows=filterRows(prevPeriod);
 
-  // Summary table
-  var sumData = dims.map(function(dim) {
-    var rows = fd.filter(function(d) { return d[dimKey]===dim; });
-    var s=0,p=0,c=0,q=0;
-    rows.forEach(function(r) { s+=r.sales; p+=r.profit; c+=r.cost; q+=r.qty; });
-    return {dim:dim,s:s,p:p,c:c,q:q,m:s?p/s*100:0};
-  }).sort(function(a,b) { return b.m-a.m; });
-  var dh = st.view==="category" ? "Category" : "Brand";
-  document.getElementById(sec+"-summary-table").innerHTML =
-    '<thead><tr><th>'+dh+'</th><th>Sales</th><th>Cost</th><th>Profit</th><th>Margin</th><th>Qty</th></tr></thead><tbody>'+
-    sumData.map(function(r) {
-      return '<tr><td style="font-weight:500">'+r.dim+'</td><td>'+INR(r.s)+'</td><td>'+INR(r.c)+'</td>'+
-        '<td class="'+(r.p<0?"rd":"gn")+'">'+(r.p<0?"-":"")+INR(r.p)+'</td>'+
-        '<td>'+badge(r.m)+'</td><td style="color:#6b7280">'+r.q+'</td></tr>';
-    }).join("") + '</tbody>';
+  if(partial){
+    if(mode==="C"){
+      // Trim prior period to same fraction → multiply prior by frac
+      prevRows=adjustedRows(prevRows, frac);
+    } else {
+      // Project current up to full period → multiply current by 1/frac
+      curRows=adjustedRows(curRows, 1/frac);
+    }
+  }
 
-  // SKU table
-  var skuMap = {};
-  fd.forEach(function(d) {
-    if (!skuMap[d.sku]) skuMap[d.sku] = {name:d.name,sku:d.sku,cat:d.category,brand:d.brand,s:0,p:0,c:0,q:0};
-    skuMap[d.sku].s+=d.sales; skuMap[d.sku].p+=d.profit; skuMap[d.sku].c+=d.cost; skuMap[d.sku].q+=d.qty;
-  });
-  var skus = Object.values(skuMap)
-    .map(function(r) { return Object.assign({},r,{m:r.s?r.p/r.s*100:0}); })
-    .sort(function(a,b) { return a.m-b.m; });
-  document.getElementById(sec+"-sku-count").textContent = skus.length + " SKUs";
-  document.getElementById(sec+"-sku-table").innerHTML =
-    '<thead><tr><th>Item</th><th>Category</th><th>Brand</th><th>Sales</th><th>Profit</th><th>Margin</th><th>Qty</th></tr></thead><tbody>'+
-    skus.map(function(r) {
-      return '<tr><td class="trunc" title="'+r.name+'">'+r.name+'</td>'+
-        '<td style="color:#6b7280">'+r.cat+'</td><td style="color:#6b7280">'+r.brand+'</td>'+
-        '<td>'+INR(r.s)+'</td><td class="'+(r.p<0?"rd":"gn")+'">'+(r.p<0?"-":"")+INR(r.p)+'</td>'+
-        '<td>'+badge(r.m)+'</td><td style="color:#6b7280">'+r.q+'</td></tr>';
-    }).join("") + '</tbody>';
+  var cur=aggBy(curRows, dimKey);
+  var prev=aggBy(prevRows, dimKey);
+  var prevMap={};prev.forEach(function(r){prevMap[r.key]=r;});
+
+  var all=cur.map(function(r){
+    var pv=prevMap[r.key];
+    return{name:r.key,s:r.s,m:r.m,p:r.p,dS:pv?r.s-pv.s:null,dM:pv?r.m-pv.m:null,hasHistory:!!pv};
+  }).filter(function(r){return r.s>0||r.hasHistory;});
+
+  var n=adaptiveN(all.length);
+  var byM=all.filter(function(r){return r.dM!==null;}).sort(function(a,b){return b.dM-a.dM;});
+  var byS=all.filter(function(r){return r.dS!==null;}).sort(function(a,b){return b.dS-a.dS;});
+
+  return{topM:byM.slice(0,n),botM:byM.slice(-n).reverse(),topS:byS.slice(0,n),botS:byS.slice(-n).reverse(),n,total:all.length};
 }
 
-window.onload = function() { loadAll(); };
+function chip(val,isMargin){
+  if(val===null||val===undefined)return'<span class="ins-chip nt">—</span>';
+  var up=val>=0;
+  if(isMargin){return'<span class="ins-chip '+(up?"up-m":"dn-m")+'">'+(up?"▲":"▼")+Math.abs(val).toFixed(1)+'pp</span>';}
+  return'<span class="ins-chip '+(up?"up-s":"dn-s")+'">'+(up?"▲":"▼")+fmtVal(Math.abs(val))+'</span>';
+}
+
+function moverRows(items,sec,level){
+  if(!items.length)return'<div class="no-data">No data</div>';
+  return items.map(function(r){
+    var oc="";
+    if(level==="category")oc='onclick="drillIns(\''+sec+'\',\'cat\',\''+escQ(r.name)+'\')"';
+    else if(level==="brand")oc='onclick="drillIns(\''+sec+'\',\'brand\',\''+escQ(r.name)+'\')"';
+    return'<div class="ins-row" '+oc+'>'
+      +'<div><div class="iname" title="'+r.name+'">'+r.name+'</div>'
+      +'<div class="ins-sub">'+INR(r.s)+'</div></div>'
+      +'<div class="imetrics">'+chip(r.dS,false)+chip(r.dM,true)+'</div>'
+      +'</div>';
+  }).join("");
+}
+
+function overallKPIHtml(rows, curP, prevP, sec){
+  var frac=getFrac(sec),partial=isPartial(sec),mode=PROJ[sec];
+  function totRows(rws){var s=0,p=0;rws.forEach(function(r){s+=r.sales;p+=r.profit;});return{s,p,m:s?p/s*100:0};}
+  var cRows=rows.filter(function(d){return d.period===curP;});
+  var pRows=rows.filter(function(d){return d.period===prevP;});
+  if(partial){
+    if(mode==="C")pRows=adjustedRows(pRows,frac);
+    else cRows=adjustedRows(cRows,1/frac);
+  }
+  var c=totRows(cRows),v=totRows(pRows);
+  var dS=c.s-v.s,dM=c.m-v.m;
+  function kpiCard(label,val,chgVal,isM,showSign){
+    var chgTxt=isM?(chgVal>=0?"▲":"▼")+Math.abs(chgVal).toFixed(1)+"pp":(chgVal>=0?"▲":"▼")+fmtVal(Math.abs(chgVal));
+    var chgCls=chgVal>=0?"up":"dn";
+    return'<div class="ins-kpi"><div class="lbl">'+label+'</div>'
+      +'<div class="val">'+val+'</div>'
+      +'<div class="chg '+chgCls+'">'+chgTxt+' vs prior</div></div>';
+  }
+  var cLabel=mode==="A"&&partial?"Projected Sales":"Current Sales";
+  return'<div class="ins-kpi-row">'
+    +kpiCard(cLabel,fmtVal(c.s),dS,false)
+    +kpiCard("Sales Δ",fmtVal(Math.abs(dS)),dS,false)
+    +kpiCard("Current Margin",c.m.toFixed(1)+"%",dM,true)
+    +kpiCard("Margin Δ",Math.abs(dM).toFixed(1)+"pp",dM,true)
+    +'</div>';
+}
+
+function partialBannerHtml(sec){
+  if(!isPartial(sec))return"";
+  var mode=PROJ[sec];
+  var isWeek=sec==="w";
+  var day=isWeek?PC.wDay:PC.mDay,total=isWeek?PC.wTotal:PC.mTotal;
+  var pct=Math.round((day/total)*100);
+  var periodWord=isWeek?"week":"month";
+
+  if(mode==="C"){
+    return'<div class="partial-banner warn">'
+      +'<div class="pb-icon">⚠️</div>'
+      +'<div class="pb-body">'
+      +'<div class="pb-title">Partial '+periodWord+' detected — Comparable Basis</div>'
+      +'<div class="pb-sub">Today is day <strong>'+day+' of '+total+'</strong> ('+pct+'% complete). '
+      +'Prior '+periodWord+' <strong>Sales & Profit scaled to '+pct+'%</strong> for like-for-like comparison. '
+      +'Margin % is recalculated as Profit ÷ Sales — never scaled directly.</div>'
+      +'</div></div>';
+  } else {
+    return'<div class="partial-banner info">'
+      +'<div class="pb-icon">📈</div>'
+      +'<div class="pb-body">'
+      +'<div class="pb-title">Partial '+periodWord+' — Full Period Projection</div>'
+      +'<div class="pb-sub">Today is day <strong>'+day+' of '+total+'</strong> ('+pct+'% complete). '
+      +'Current '+periodWord+' <strong>Sales & Profit extrapolated to 100%</strong> at current run-rate (÷'+pct+'%). '
+      +'Margin % = Profit ÷ Sales and reflects actual mix to date — it is not projected.</div>'
+      +'</div></div>';
+  }
+}
+
+function projToggleHtml(sec){
+  if(!isPartial(sec))return"";
+  var mode=PROJ[sec];
+  return'<div class="proj-toggle">'
+    +'<span style="font-size:12px;color:#6b7280;font-weight:500">Comparison mode:</span>'
+    +'<button class="proj-btn '+(mode==="C"?"active-c":"")+'" onclick="setProj(\''+sec+'\',\'C\')">⚖️ Comparable Basis</button>'
+    +'<button class="proj-btn '+(mode==="A"?"active-a":"")+'" onclick="setProj(\''+sec+'\',\'A\')">📈 Project Full Period</button>'
+    +'</div>';
+}
+
+function insLevelBlock(title,mv,sec,level){
+  var pill=mv.n===mv.total?"all "+mv.total:mv.n+" of "+mv.total+" shown";
+  var h='<div class="ins-level">';
+  h+='<div class="ins-level-hdr">'+title+'<span class="pill">'+pill+'</span></div>';
+  h+='<div class="sec-sub-hdr">📈 Sales Movement</div>';
+  h+='<div class="ins-cols">';
+  h+='<div class="ins-half"><div class="ins-half-hdr gain">🔺 Top Gainers</div>'+moverRows(mv.topS,sec,level)+'</div>';
+  h+='<div class="ins-half"><div class="ins-half-hdr loss">🔻 Top Decliners</div>'+moverRows(mv.botS,sec,level)+'</div>';
+  h+='</div>';
+  h+='<div class="sec-sub-hdr">📊 Margin Movement</div>';
+  h+='<div class="ins-cols">';
+  h+='<div class="ins-half"><div class="ins-half-hdr gain">🔺 Margin Improvers</div>'+moverRows(mv.topM,sec,level)+'</div>';
+  h+='<div class="ins-half"><div class="ins-half-hdr loss">🔻 Margin Decliners</div>'+moverRows(mv.botM,sec,level)+'</div>';
+  h+='</div>';
+  h+='</div>';
+  return h;
+}
+
+function renderInsights(sec){
+  var data=getData(sec),el=document.getElementById(sec+"-ins-content");
+  if(!data.length){el.innerHTML='<div class="no-data">No data loaded.</div>';return;}
+  var periods=getSortedPeriods(sec);
+  if(periods.length<2){el.innerHTML='<div class="no-data">Need at least 2 periods to compare.</div>';return;}
+
+  var curP=periods[periods.length-1],prevP=periods[periods.length-2];
+  var ist=S[sec].ins;
+  var html="";
+
+  // Period bar
+  html+='<div class="ins-period-bar">Comparing <strong>'+prevP+'</strong><span class="arrow">→</span><strong>'+curP+'</strong>'
+    +(isPartial(sec)?'<span class="proj-mode-badge '+(PROJ[sec]==="C"?"c":"a")+'" style="margin-left:auto">'+(PROJ[sec]==="C"?"⚖️ Comparable":"📈 Projected")+'</span>':'<span style="margin-left:auto;font-size:11px;color:#9ca3af">Complete period</span>')
+    +'</div>';
+
+  // Partial controls
+  html+=projToggleHtml(sec);
+  html+=partialBannerHtml(sec);
+
+  // Breadcrumb
+  html+='<div class="drill-breadcrumb"><span class="bc-item" onclick="drillIns(\''+sec+'\',\'reset\',null)">All Categories</span>';
+  if(ist.level==="brand"&&ist.cat){
+    html+='<span class="bc-sep">›</span><span class="bc-item" onclick="drillIns(\''+sec+'\',\'cat\',\''+escQ(ist.cat)+'\')">'+ist.cat+'</span><span class="bc-sep">›</span><span class="bc-cur">By Brand</span>';
+  } else if(ist.level==="sku"&&ist.cat&&ist.brand){
+    html+='<span class="bc-sep">›</span><span class="bc-item" onclick="drillIns(\''+sec+'\',\'cat\',\''+escQ(ist.cat)+'\')">'+ist.cat+'</span>'
+      +'<span class="bc-sep">›</span><span class="bc-item" onclick="drillIns(\''+sec+'\',\'brand\',\''+escQ(ist.brand)+'\')">'+ist.brand+'</span>'
+      +'<span class="bc-sep">›</span><span class="bc-cur">SKUs</span>';
+  }
+  html+='</div>';
+
+  var scopedData=data;
+  var title="";
+
+  if(ist.level==="category"){
+    html+=overallKPIHtml(data,curP,prevP,sec);
+    var mv=buildMovers(data,"category",curP,prevP,null,null,sec);
+    html+=insLevelBlock("Category Movers",mv,sec,"category");
+  } else if(ist.level==="brand"&&ist.cat){
+    scopedData=data.filter(function(d){return d.category===ist.cat;});
+    html+=overallKPIHtml(scopedData,curP,prevP,sec);
+    var mv2=buildMovers(data,"brand",curP,prevP,"category",ist.cat,sec);
+    html+=insLevelBlock("Brands in "+ist.cat,mv2,sec,"brand");
+  } else if(ist.level==="sku"&&ist.brand){
+    scopedData=data.filter(function(d){return d.category===ist.cat&&d.brand===ist.brand;});
+    html+=overallKPIHtml(scopedData,curP,prevP,sec);
+    var mv3=buildMovers(data,"name",curP,prevP,"brand",ist.brand,sec);
+    html+=insLevelBlock("SKUs in "+ist.brand,mv3,sec,"sku");
+  }
+
+  el.innerHTML=html;
+}
+
+function drillIns(sec,action,val){
+  var ist=S[sec].ins;
+  if(action==="reset"){ist.level="category";ist.cat=null;ist.brand=null;}
+  else if(action==="cat"){ist.level="brand";ist.cat=val;}
+  else if(action==="brand"){ist.level="sku";ist.brand=val;}
+  renderInsights(sec);
+}
+
+window.onload=function(){loadAll();};
 </script>
 </body>
 </html>
