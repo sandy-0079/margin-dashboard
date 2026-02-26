@@ -314,12 +314,20 @@ async function fetchWithTimeout(url,ms){
   try{var r=await fetch(url,{signal:ctrl.signal});clearTimeout(tid);return r;}
   catch(e){clearTimeout(tid);throw e;}
 }
+// Race direct URL + all proxies simultaneously — fastest wins
 async function fetchCSV(url){
-  try{var r=await fetchWithTimeout(url,5000);if(r.ok)return await r.text();}catch(e){}
-  for(var i=0;i<PROXIES.length;i++){
-    try{var r2=await fetchWithTimeout(PROXIES[i]+encodeURIComponent(url),8000);if(r2.ok)return await r2.text();}catch(e){}
-  }
-  throw new Error("All fetch attempts failed");
+  var attempts=[url].concat(PROXIES.map(function(p){return p+encodeURIComponent(url);}));
+  return new Promise(function(resolve,reject){
+    var settled=false,failed=0;
+    attempts.forEach(function(u){
+      fetch(u).then(function(r){
+        if(!settled&&r.ok){settled=true;r.text().then(resolve);}
+        else{failed++;if(failed===attempts.length&&!settled)reject(new Error("All failed"));}
+      }).catch(function(){
+        failed++;if(failed===attempts.length&&!settled)reject(new Error("All failed"));
+      });
+    });
+  });
 }
 
 // ── LOAD ──────────────────────────────────────────────────────────────────────
@@ -659,7 +667,7 @@ function chipLegendHtml(level){
     +'<span><span class="ins-chip up" style="font-size:10px">▲S₹ Sales absolute</span></span>'
     +'<span><span class="ins-chip up" style="font-size:10px">▲M pp Margin delta</span></span>'
     +'<span><span class="ins-chip up" style="font-size:10px">▲M₹ Profit absolute</span></span>'
-    +'<span><span class="ins-chip zt" style="font-size:10px">●__ No change</span></span>'
+    +'<span style="font-size:10px;color:#9ca3af">🟢 positive &nbsp;🔴 negative &nbsp;🟡 no change</span>'
     +'</div>';
 }
 
