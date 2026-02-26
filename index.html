@@ -326,7 +326,7 @@ function renderDrop(sec, items, q){
   var drop=document.getElementById(sec+"-drop");
   if(!items.length){drop.style.display="none";return;}
   drop.innerHTML=items.map(function(d,i){
-    var label=q&&q.trim()?d.replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),'<strong style="color:#4f46e5">$1</strong>'):d;
+    var label=q&&q.trim()?d.replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\    var label=q&&q.trim()?d.replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),'<strong style="color:#4f46e5">$1</strong>'):d;")+")","gi"),'<strong style="color:#4f46e5;font-style:normal;">$1</strong>'):d;
     return '<div class="drop-item" id="'+sec+'-di-'+i+'" onclick="selectDim(\''+sec+'\',\''+d.replace(/\\/g,"\\\\").replace(/'/g,"\\'")+'\')">'+label+'</div>';
   }).join("");
   drop.style.display="block";
