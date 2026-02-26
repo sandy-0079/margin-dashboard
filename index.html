@@ -47,6 +47,11 @@ tr:nth-child(even) td{background:#f9fafb}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .section-badge-wow{background:#eef2ff;color:#4f46e5;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
 .section-badge-mom{background:#fef3c7;color:#92400e;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.section-title-wow{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:12px;padding:14px 20px;margin-bottom:16px}
+.section-title-mom{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#d97706,#f59e0b);border-radius:12px;padding:14px 20px;margin-bottom:16px}
+.section-title-wow h2,.section-title-mom h2{color:#fff;font-size:17px;font-weight:700;padding:0;margin:0}
+.section-title-wow .stbadge{background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-left:auto}
+.section-title-mom .stbadge{background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-left:auto}
 
 /* ── TAG FILTER ── */
 .filter-wrap{display:flex;flex-direction:column;gap:6px;flex:1;min-width:200px}
@@ -80,9 +85,10 @@ tr:nth-child(even) td{background:#f9fafb}
   </div>
 
   <!-- ── WEEK ON WEEK ── -->
-  <div class="section-header">
-    <h2>📅 Week on Week View</h2>
-    <span class="section-badge-wow" id="wow-info"></span>
+  <div class="section-title-wow">
+    <span style="font-size:22px">📅</span>
+    <h2>Week on Week View</h2>
+    <span class="stbadge" id="wow-info"></span>
   </div>
   <div class="kpis">
     <div class="kpi"><div class="kpi-label">Total Sales</div><div class="kpi-val" id="w-kpi-sales"></div></div>
@@ -126,9 +132,10 @@ tr:nth-child(even) td{background:#f9fafb}
   <hr class="divider"/>
 
   <!-- ── MONTH ON MONTH ── -->
-  <div class="section-header">
-    <h2>📆 Month on Month View</h2>
-    <span class="section-badge-mom" id="mom-info"></span>
+  <div class="section-title-mom">
+    <span style="font-size:22px">📆</span>
+    <h2>Month on Month View</h2>
+    <span class="stbadge" id="mom-info"></span>
   </div>
   <div class="kpis">
     <div class="kpi"><div class="kpi-label">Total Sales</div><div class="kpi-val" id="m-kpi-sales"></div></div>
@@ -339,7 +346,9 @@ function onKey(sec,e){
     highlightDrop(sec,items);
   } else if(e.key==="Enter"){
     e.preventDefault();
-    if(st.focusIdx>=0&&items[st.focusIdx]){
+    if(items.length===1){
+      items[0].click();
+    } else if(st.focusIdx>=0&&items[st.focusIdx]){
       items[st.focusIdx].click();
     }
   } else if(e.key==="Escape"){
