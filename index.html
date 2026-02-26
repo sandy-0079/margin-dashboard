@@ -218,10 +218,15 @@ var MONTH_ORDER = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,
 var wData=[],mData=[],wChart=null,mChart=null;
 var PC=(function(){
   var now=new Date(),jsDay=now.getDay(),monDay=jsDay===0?7:jsDay;
-  var wFrac=monDay/7,wComplete=monDay===7;
-  var day=now.getDate(),daysInMonth=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
-  var mFrac=day/daysInMonth,mComplete=day===daysInMonth;
-  return{wDay:monDay,wTotal:7,wFrac,wComplete,mDay:day,mTotal:daysInMonth,mFrac,mComplete,
+  // Data is through yesterday; if yesterday was last week (Monday today), use 7 for prior week
+  var wDay=monDay===1?7:monDay-1,wFrac=wDay/7,wComplete=wDay===7;
+  // Month: data through yesterday; if today is 1st, use last day of prior month
+  var day=now.getDate();
+  var yesterday=new Date(now.getFullYear(),now.getMonth(),day-1);
+  var dataDay=yesterday.getDate();
+  var daysInDataMonth=new Date(yesterday.getFullYear(),yesterday.getMonth()+1,0).getDate();
+  var mFrac=dataDay/daysInDataMonth,mComplete=dataDay===daysInDataMonth;
+  return{wDay,wTotal:7,wFrac,wComplete,mDay:dataDay,mTotal:daysInDataMonth,mFrac,mComplete,
     today:now.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})};
 })();
 var PROJ={w:"C",m:"C"};
@@ -528,7 +533,7 @@ function chip(prefix,val,isMargin){
   var bg=val>0?"#d1fae5":val<0?"#fee2e2":"#fef9c3";
   var col=val>0?"#065f46":val<0?"#991b1b":"#854d0e";
   var arrow=val>0?"▲":val<0?"▼":"●";
-  var fmt=isMargin?Math.abs(val).toFixed(1)+"pp":fmtVal(Math.abs(val));
+  var fmt=isMargin?Math.abs(val).toFixed(2)+"pp":fmtVal(Math.abs(val));
   return'<span style="font-size:11px;font-weight:600;padding:2px 7px;border-radius:6px;white-space:nowrap;background:'+bg+';color:'+col+'">'+arrow+prefix+' '+fmt+'</span>';
 }
 function chipPct(val){
