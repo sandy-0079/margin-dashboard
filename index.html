@@ -602,8 +602,9 @@ function buildMovers(data,dimKey,curPeriod,prevPeriod,filterKey,filterVal,sec){
     var pv=prevMap[r.key];
     var dS=pv?r.s-pv.s:null;
     var dSPct=(pv&&pv.s>0)?((r.s-pv.s)/pv.s*100):null;
+    var dP=pv?r.p-pv.p:null;
     var dM=pv?r.m-pv.m:null;
-    return{name:r.key,s:r.s,m:r.m,prevS:pv?pv.s:null,dS,dSPct,dM,hasHistory:!!pv};
+    return{name:r.key,s:r.s,m:r.m,prevS:pv?pv.s:null,dS,dSPct,dP,dM,hasHistory:!!pv};
   }).filter(function(r){return r.s>0||r.hasHistory;});
 
   var n=adaptiveN(all.length);
@@ -630,8 +631,14 @@ function chipMargin(dM){
 }
 
 // level: "category" → abs+margin only; "brand"/"sku" → pct+abs+margin
+// level: "category" → Sales%+Sales₹+Profit₹+Margin pp; "brand"/"sku" → same
 function metricsHtml(r,level){
-  return chipSalesPct(r.dSPct)+chipSalesAbs(r.dS)+chipMargin(r.dM);
+  return chipSalesPct(r.dSPct)+chipSalesAbs(r.dS)+chipProfitAbs(r.dP)+chipMargin(r.dM);
+}
+function chipProfitAbs(dP){
+  if(dP===null||dP===undefined)return'<span class="ins-chip nt">—</span>';
+  var up=dP>=0;
+  return'<span class="ins-chip '+(up?"up-s":"dn-s")+'" title="Profit Δ">'+(up?"▲":"▼")+'P '+fmtVal(Math.abs(dP))+'</span>';
 }
 
 function moverRows(items,sec,level){
@@ -653,6 +660,7 @@ function chipLegendHtml(level){
   return'<div class="chip-legend">'
     +'<span><span class="ins-chip up-pct" style="font-size:10px">▲ Sales %</span></span>'
     +'<span><span class="ins-chip up-s" style="font-size:10px">▲ Sales ₹</span></span>'
+    +'<span><span class="ins-chip up-s" style="font-size:10px">▲ P Profit ₹</span></span>'
     +'<span><span class="ins-chip up-m" style="font-size:10px">▲ Margin pp</span></span>'
     +'</div>';
 }
@@ -669,7 +677,9 @@ function overallKPIHtml(rows,curP,prevP,sec){
   var c=tot(cRows),v=tot(pRows);
   var dS=c.s-v.s,dM=c.m-v.m;
   var curLbl=mode==="A"&&partial?"Sales (Proj.)":"Sales ("+periodLabel(curP,sec)+")";
-  var prevLbl="Sales ("+periodLabel(prevP,sec)+")";
+  var prevSLbl="Sales ("+periodLabel(prevP,sec)+")";
+  var curMLbl="Margin ("+periodLabel(curP,sec)+")";
+  var prevMLbl="Margin ("+periodLabel(prevP,sec)+")";
   function kpiCard(label,val,chgVal,isM){
     var chgTxt=isM?(chgVal>=0?"▲":"▼")+Math.abs(chgVal).toFixed(1)+"pp":(chgVal>=0?"▲":"▼")+fmtVal(Math.abs(chgVal));
     var chgCls=chgVal>=0?"up":"dn";
@@ -684,9 +694,9 @@ function overallKPIHtml(rows,curP,prevP,sec){
   }
   return'<div class="ins-kpi-row">'
     +kpiCard(curLbl,fmtVal(c.s),dS,false)
-    +kpiCardPlain(prevLbl,fmtVal(v.s),"prior period")
-    +kpiCard("Current Margin",c.m.toFixed(1)+"%",dM,true)
-    +kpiCard("Margin Δ",Math.abs(dM).toFixed(1)+"pp",dM,true)
+    +kpiCardPlain(prevSLbl,fmtVal(v.s),"prior period")
+    +kpiCard(curMLbl,c.m.toFixed(1)+"%",dM,true)
+    +kpiCardPlain(prevMLbl,v.m.toFixed(1)+"%","prior period")
     +'</div>';
 }
 
@@ -750,7 +760,7 @@ function renderInsights(sec){
 
   // Period bar — specific names
   var cLbl=periodLabel(curP,sec),pLbl=periodLabel(prevP,sec);
-  html+='<div class="ins-period-bar">Comparing <strong>'+pLbl+'</strong><span class="arrow">→</span><strong>'+cLbl+'</strong>'
+  html+='<div class="ins-period-bar">Comparing <strong>'+cLbl+'</strong><span class="arrow">→</span><strong>'+pLbl+'</strong>'
     +(isPartial(sec)
       ?'<span class="proj-mode-badge '+(PROJ[sec]==="C"?"c":"a")+'" style="margin-left:auto">'+(PROJ[sec]==="C"?"⚖️ Comparable":"📈 Projected")+'</span>'
       :'<span style="margin-left:auto;font-size:11px;color:#9ca3af">Complete period</span>')
