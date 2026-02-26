@@ -66,7 +66,6 @@ tr:nth-child(even) td{background:#f9fafb}
 .ins-period-bar{display:flex;align-items:center;gap:10px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:10px 16px;margin-bottom:12px;font-size:12px;color:#6b7280;flex-wrap:wrap}
 .ins-period-bar strong{color:#111;font-size:13px}
 .ins-period-bar .arrow{font-size:16px;color:#9ca3af}
-/* partial period banner */
 .partial-banner{border-radius:10px;padding:11px 16px;margin-bottom:12px;font-size:12px;display:flex;align-items:flex-start;gap:10px}
 .partial-banner.warn{background:#fffbeb;border:1px solid #fcd34d}
 .partial-banner.info{background:#eff6ff;border:1px solid #93c5fd}
@@ -74,7 +73,6 @@ tr:nth-child(even) td{background:#f9fafb}
 .partial-banner .pb-body{flex:1}
 .partial-banner .pb-title{font-weight:700;font-size:12px;margin-bottom:3px}
 .partial-banner .pb-sub{color:#6b7280;line-height:1.5}
-/* projection toggle */
 .proj-toggle{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
 .proj-btn{font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #e5e7eb;background:#f9fafb;color:#6b7280;cursor:pointer;font-weight:500;transition:all .15s}
 .proj-btn.active-c{background:#eff6ff;border-color:#3b82f6;color:#1d4ed8;font-weight:600}
@@ -82,7 +80,6 @@ tr:nth-child(even) td{background:#f9fafb}
 .proj-mode-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
 .proj-mode-badge.c{background:#dbeafe;color:#1e40af}
 .proj-mode-badge.a{background:#ede9fe;color:#5b21b6}
-/* KPI row */
 .ins-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
 .ins-kpi{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px}
 .ins-kpi .lbl{font-size:10px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
@@ -94,17 +91,21 @@ tr:nth-child(even) td{background:#f9fafb}
 .ins-level-hdr .pill{font-size:10px;font-weight:600;background:#f3f4f6;color:#6b7280;border-radius:20px;padding:2px 8px}
 .ins-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .ins-half{background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
-.ins-half-hdr{padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;border-bottom:1px solid #e5e7eb}
+.ins-half-hdr{padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:6px}
 .ins-half-hdr.gain{background:#f0fdf4;color:#15803d}
 .ins-half-hdr.loss{background:#fff7f7;color:#b91c1c}
+.tri-up{color:#16a34a;font-size:13px}
+.tri-dn{color:#dc2626;font-size:13px}
 .ins-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid #f9fafb;cursor:pointer;transition:background .12s}
 .ins-row:last-child{border-bottom:none}
 .ins-row:hover{background:#f5f3ff}
 .ins-row .iname{flex:1;font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ins-row .imetrics{display:flex;gap:6px;flex-shrink:0}
+.ins-row .imetrics{display:flex;gap:4px;flex-shrink:0;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .ins-chip{font-size:11px;font-weight:600;padding:2px 7px;border-radius:6px;white-space:nowrap}
 .ins-chip.up-s{background:#d1fae5;color:#065f46}
 .ins-chip.dn-s{background:#fee2e2;color:#991b1b}
+.ins-chip.up-pct{background:#dcfce7;color:#166534}
+.ins-chip.dn-pct{background:#fecaca;color:#991b1b}
 .ins-chip.up-m{background:#dbeafe;color:#1e40af}
 .ins-chip.dn-m{background:#fef3c7;color:#92400e}
 .ins-chip.nt{background:#f3f4f6;color:#9ca3af}
@@ -116,6 +117,8 @@ tr:nth-child(even) td{background:#f9fafb}
 .bc-cur{color:#111;font-weight:600}
 .no-data{text-align:center;padding:32px;font-size:12px;color:#9ca3af}
 .sec-sub-hdr{font-size:12px;font-weight:600;color:#374151;margin:14px 0 6px}
+.chip-legend{font-size:10px;color:#9ca3af;margin-bottom:8px;display:flex;gap:10px;flex-wrap:wrap}
+.chip-legend span{display:flex;align-items:center;gap:3px}
 </style>
 </head>
 <body>
@@ -245,33 +248,19 @@ var MONTH_ORDER = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,
 var wData=[], mData=[];
 var wChart=null, mChart=null;
 
-// ── PERIOD CONTEXT (computed once at load) ────────────────────────────────────
-// Week: Mon=1 … Sun=7; today is Thu Feb 26 2026 → day 4 of 7
-var PC = (function(){
-  var now = new Date();
-  // Week fraction: JS getDay() → 0=Sun,1=Mon…6=Sat. Map to Mon-based 1-7.
-  var jsDay = now.getDay(); // 0-6
-  var monDay = jsDay === 0 ? 7 : jsDay; // Mon=1…Sun=7
-  var wFrac = monDay / 7;
-  var wComplete = monDay === 7; // Sunday = week done
-
-  // Month fraction
-  var day = now.getDate();
-  var daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
-  var mFrac = day / daysInMonth;
-  var mComplete = day === daysInMonth;
-
-  return {
-    wDay: monDay, wTotal: 7, wFrac: wFrac, wComplete: wComplete,
-    mDay: day, mTotal: daysInMonth, mFrac: mFrac, mComplete: mComplete,
-    today: now.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})
-  };
+// ── PERIOD CONTEXT ────────────────────────────────────────────────────────────
+var PC=(function(){
+  var now=new Date();
+  var jsDay=now.getDay(), monDay=jsDay===0?7:jsDay;
+  var wFrac=monDay/7, wComplete=monDay===7;
+  var day=now.getDate(), daysInMonth=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  var mFrac=day/daysInMonth, mComplete=day===daysInMonth;
+  return{wDay:monDay,wTotal:7,wFrac,wComplete,mDay:day,mTotal:daysInMonth,mFrac,mComplete,
+    today:now.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})};
 })();
 
-// projection mode per section: "C" = comparable, "A" = projected
-var PROJ = {w:"C", m:"C"};
-
-var S = {
+var PROJ={w:"C",m:"C"};
+var S={
   w:{view:"category",metric:"margin",selected:[],focusIdx:-1,ins:{level:"category",cat:null,brand:null}},
   m:{view:"category",metric:"margin",selected:[],focusIdx:-1,ins:{level:"category",cat:null,brand:null}}
 };
@@ -292,8 +281,7 @@ function badge(v){
   return'<span class="badge '+c+'">'+v.toFixed(1)+'%</span>';
 }
 function monthSortKey(l){
-  var p=l.trim().split(/[\s']+/);
-  var m=MONTH_ORDER[p[0]]||0,y=parseInt(p[1]||"0");
+  var p=l.trim().split(/[\s']+/),m=MONTH_ORDER[p[0]]||0,y=parseInt(p[1]||"0");
   return(y<50?2000+y:1900+y)*100+m;
 }
 
@@ -303,8 +291,7 @@ function parseCSV(text,periodCol){
   var hdrs=lines[0].split(",").map(function(h){return h.trim().toLowerCase().replace(/"/g,"");});
   function ix(h){return hdrs.findIndex(function(x){return x.includes(h);});}
   var iN=ix("item"),iS=ix("sku"),iC=ix("category"),iB=ix("brand"),
-      iQ=ix("qty"),iCo=ix("total cost"),iSa=ix("total sales"),
-      iP=ix("profit"),iM=ix("margin"),iPer=ix(periodCol.toLowerCase());
+      iQ=ix("qty"),iCo=ix("total cost"),iSa=ix("total sales"),iP=ix("profit"),iM=ix("margin"),iPer=ix(periodCol.toLowerCase());
   var rows=[];
   for(var i=1;i<lines.length;i++){
     var l=lines[i],c=[],cur="",inQ=false;
@@ -396,10 +383,7 @@ function setTab(sec,t){
   if(t==="insights")renderInsights(sec);
   else renderSection(sec);
 }
-function setProj(sec,mode){
-  PROJ[sec]=mode;
-  renderInsights(sec);
-}
+function setProj(sec,mode){PROJ[sec]=mode;renderInsights(sec);}
 
 // ── SEARCH ────────────────────────────────────────────────────────────────────
 function getDims(sec){
@@ -490,7 +474,6 @@ function renderSection(sec){
     if(sec==="w")return parseInt(a.replace("W",""))-parseInt(b.replace("W",""));
     return monthSortKey(a)-monthSortKey(b);
   });
-
   var chartData=periods.map(function(p){
     var row={};
     dims.forEach(function(dim){
@@ -555,30 +538,25 @@ function getSortedPeriods(sec){
   });
 }
 
-// Is the current (latest) period detected as partial?
-function isPartial(sec){
-  if(sec==="w")return !PC.wComplete;
-  return !PC.mComplete;
+// ── Human-readable period label ───────────────────────────────────────────────
+function periodLabel(p,sec){
+  // week: "W9" → "Week 9"; month: pass through as-is ("Jan '25")
+  if(sec==="w") return p.replace(/^W(\d+)$/,"Week $1");
+  return p;
 }
 
-// Completion fraction of the current period
-function getFrac(sec){
-  return sec==="w"?PC.wFrac:PC.mFrac;
-}
+function isPartial(sec){return sec==="w"?!PC.wComplete:!PC.mComplete;}
+function getFrac(sec){return sec==="w"?PC.wFrac:PC.mFrac;}
 
-// For a given period's rows, apply adjustment factor to sales & profit (margin recalculated)
-// mode C: adjust PREV period DOWN to same fraction
-// mode A: adjust CUR period UP by 1/frac
-// Only scale Sales & Profit (additive). Margin recalculates naturally as Profit/Sales.
-// Cost & Qty scaled too as they're additive — margin itself is never directly touched.
-function adjustedRows(rows, factor){
+// Scale only additive fields; margin recalculates as Profit÷Sales
+function adjustedRows(rows,factor){
   return rows.map(function(r){
-    var s=r.sales*factor, p=r.profit*factor, c=r.cost*factor, q=r.qty*factor;
-    return Object.assign({},r,{sales:s, profit:p, cost:c, qty:q, margin:s?p/s*100:0});
+    var s=r.sales*factor,p=r.profit*factor,c=r.cost*factor,q=r.qty*factor;
+    return Object.assign({},r,{sales:s,profit:p,cost:c,qty:q,margin:s?p/s*100:0});
   });
 }
 
-function aggBy(rows, key){
+function aggBy(rows,key){
   var map={};
   rows.forEach(function(d){
     var k=d[key]||"(unknown)";
@@ -595,12 +573,8 @@ function adaptiveN(total){
   return 10;
 }
 
-// Core mover builder — handles both projection modes
-function buildMovers(data, dimKey, curPeriod, prevPeriod, filterKey, filterVal, sec){
-  var frac=getFrac(sec);
-  var partial=isPartial(sec);
-  var mode=PROJ[sec];
-
+function buildMovers(data,dimKey,curPeriod,prevPeriod,filterKey,filterVal,sec){
+  var frac=getFrac(sec),partial=isPartial(sec),mode=PROJ[sec];
   function filterRows(period){
     return data.filter(function(d){
       if(d.period!==period)return false;
@@ -608,41 +582,47 @@ function buildMovers(data, dimKey, curPeriod, prevPeriod, filterKey, filterVal, 
       return true;
     });
   }
-
-  var curRows=filterRows(curPeriod);
-  var prevRows=filterRows(prevPeriod);
-
+  var curRows=filterRows(curPeriod),prevRows=filterRows(prevPeriod);
   if(partial){
-    if(mode==="C"){
-      // Trim prior period to same fraction → multiply prior by frac
-      prevRows=adjustedRows(prevRows, frac);
-    } else {
-      // Project current up to full period → multiply current by 1/frac
-      curRows=adjustedRows(curRows, 1/frac);
-    }
+    if(mode==="C") prevRows=adjustedRows(prevRows,frac);
+    else           curRows=adjustedRows(curRows,1/frac);
   }
-
-  var cur=aggBy(curRows, dimKey);
-  var prev=aggBy(prevRows, dimKey);
+  var cur=aggBy(curRows,dimKey),prev=aggBy(prevRows,dimKey);
   var prevMap={};prev.forEach(function(r){prevMap[r.key]=r;});
-
   var all=cur.map(function(r){
     var pv=prevMap[r.key];
-    return{name:r.key,s:r.s,m:r.m,p:r.p,dS:pv?r.s-pv.s:null,dM:pv?r.m-pv.m:null,hasHistory:!!pv};
+    var dS=pv?r.s-pv.s:null;
+    var dSPct=(pv&&pv.s>0)?((r.s-pv.s)/pv.s*100):null;
+    var dM=pv?r.m-pv.m:null;
+    return{name:r.key,s:r.s,m:r.m,prevS:pv?pv.s:null,dS,dSPct,dM,hasHistory:!!pv};
   }).filter(function(r){return r.s>0||r.hasHistory;});
 
   var n=adaptiveN(all.length);
   var byM=all.filter(function(r){return r.dM!==null;}).sort(function(a,b){return b.dM-a.dM;});
   var byS=all.filter(function(r){return r.dS!==null;}).sort(function(a,b){return b.dS-a.dS;});
-
   return{topM:byM.slice(0,n),botM:byM.slice(-n).reverse(),topS:byS.slice(0,n),botS:byS.slice(-n).reverse(),n,total:all.length};
 }
 
-function chip(val,isMargin){
-  if(val===null||val===undefined)return'<span class="ins-chip nt">—</span>';
-  var up=val>=0;
-  if(isMargin){return'<span class="ins-chip '+(up?"up-m":"dn-m")+'">'+(up?"▲":"▼")+Math.abs(val).toFixed(1)+'pp</span>';}
-  return'<span class="ins-chip '+(up?"up-s":"dn-s")+'">'+(up?"▲":"▼")+fmtVal(Math.abs(val))+'</span>';
+// ── Chip renderers ─────────────────────────────────────────────────────────────
+function chipSalesAbs(dS){
+  if(dS===null||dS===undefined)return'<span class="ins-chip nt">—</span>';
+  var up=dS>=0;
+  return'<span class="ins-chip '+(up?"up-s":"dn-s")+'">'+(up?"▲":"▼")+fmtVal(Math.abs(dS))+'</span>';
+}
+function chipSalesPct(pct){
+  if(pct===null||pct===undefined)return'<span class="ins-chip nt">—</span>';
+  var up=pct>=0;
+  return'<span class="ins-chip '+(up?"up-pct":"dn-pct")+'">'+(up?"▲":"▼")+Math.abs(pct).toFixed(1)+'%</span>';
+}
+function chipMargin(dM){
+  if(dM===null||dM===undefined)return'<span class="ins-chip nt">—</span>';
+  var up=dM>=0;
+  return'<span class="ins-chip '+(up?"up-m":"dn-m")+'">'+(up?"▲":"▼")+Math.abs(dM).toFixed(1)+'pp</span>';
+}
+
+// level: "category" → abs+margin only; "brand"/"sku" → pct+abs+margin
+function metricsHtml(r,level){
+  return chipSalesPct(r.dSPct)+chipSalesAbs(r.dS)+chipMargin(r.dM);
 }
 
 function moverRows(items,sec,level){
@@ -651,36 +631,51 @@ function moverRows(items,sec,level){
     var oc="";
     if(level==="category")oc='onclick="drillIns(\''+sec+'\',\'cat\',\''+escQ(r.name)+'\')"';
     else if(level==="brand")oc='onclick="drillIns(\''+sec+'\',\'brand\',\''+escQ(r.name)+'\')"';
+    var sub=r.prevS!==null?INR(r.s)+" vs "+INR(r.prevS)+" prior":INR(r.s);
     return'<div class="ins-row" '+oc+'>'
-      +'<div><div class="iname" title="'+r.name+'">'+r.name+'</div>'
-      +'<div class="ins-sub">'+INR(r.s)+'</div></div>'
-      +'<div class="imetrics">'+chip(r.dS,false)+chip(r.dM,true)+'</div>'
+      +'<div style="min-width:0"><div class="iname" title="'+r.name+'">'+r.name+'</div>'
+      +'<div class="ins-sub">'+sub+'</div></div>'
+      +'<div class="imetrics">'+metricsHtml(r,level)+'</div>'
       +'</div>';
   }).join("");
 }
 
-function overallKPIHtml(rows, curP, prevP, sec){
+function chipLegendHtml(level){
+  return'<div class="chip-legend">'
+    +'<span><span class="ins-chip up-pct" style="font-size:10px">▲ Sales %</span></span>'
+    +'<span><span class="ins-chip up-s" style="font-size:10px">▲ Sales ₹</span></span>'
+    +'<span><span class="ins-chip up-m" style="font-size:10px">▲ Margin pp</span></span>'
+    +'</div>';
+}
+
+function overallKPIHtml(rows,curP,prevP,sec){
   var frac=getFrac(sec),partial=isPartial(sec),mode=PROJ[sec];
-  function totRows(rws){var s=0,p=0;rws.forEach(function(r){s+=r.sales;p+=r.profit;});return{s,p,m:s?p/s*100:0};}
+  function tot(rws){var s=0,p=0;rws.forEach(function(r){s+=r.sales;p+=r.profit;});return{s,p,m:s?p/s*100:0};}
   var cRows=rows.filter(function(d){return d.period===curP;});
   var pRows=rows.filter(function(d){return d.period===prevP;});
   if(partial){
-    if(mode==="C")pRows=adjustedRows(pRows,frac);
-    else cRows=adjustedRows(cRows,1/frac);
+    if(mode==="C") pRows=adjustedRows(pRows,frac);
+    else           cRows=adjustedRows(cRows,1/frac);
   }
-  var c=totRows(cRows),v=totRows(pRows);
+  var c=tot(cRows),v=tot(pRows);
   var dS=c.s-v.s,dM=c.m-v.m;
-  function kpiCard(label,val,chgVal,isM,showSign){
+  var curLbl=mode==="A"&&partial?"Sales (Proj.)":"Sales ("+periodLabel(curP,sec)+")";
+  var prevLbl="Sales ("+periodLabel(prevP,sec)+")";
+  function kpiCard(label,val,chgVal,isM){
     var chgTxt=isM?(chgVal>=0?"▲":"▼")+Math.abs(chgVal).toFixed(1)+"pp":(chgVal>=0?"▲":"▼")+fmtVal(Math.abs(chgVal));
     var chgCls=chgVal>=0?"up":"dn";
     return'<div class="ins-kpi"><div class="lbl">'+label+'</div>'
       +'<div class="val">'+val+'</div>'
       +'<div class="chg '+chgCls+'">'+chgTxt+' vs prior</div></div>';
   }
-  var cLabel=mode==="A"&&partial?"Projected Sales":"Current Sales";
+  function kpiCardPlain(label,val,sub){
+    return'<div class="ins-kpi"><div class="lbl">'+label+'</div>'
+      +'<div class="val">'+val+'</div>'
+      +'<div class="chg nt">'+sub+'</div></div>';
+  }
   return'<div class="ins-kpi-row">'
-    +kpiCard(cLabel,fmtVal(c.s),dS,false)
-    +kpiCard("Sales Δ",fmtVal(Math.abs(dS)),dS,false)
+    +kpiCard(curLbl,fmtVal(c.s),dS,false)
+    +kpiCardPlain(prevLbl,fmtVal(v.s),"prior period")
     +kpiCard("Current Margin",c.m.toFixed(1)+"%",dM,true)
     +kpiCard("Margin Δ",Math.abs(dM).toFixed(1)+"pp",dM,true)
     +'</div>';
@@ -688,38 +683,29 @@ function overallKPIHtml(rows, curP, prevP, sec){
 
 function partialBannerHtml(sec){
   if(!isPartial(sec))return"";
-  var mode=PROJ[sec];
-  var isWeek=sec==="w";
+  var mode=PROJ[sec],isWeek=sec==="w";
   var day=isWeek?PC.wDay:PC.mDay,total=isWeek?PC.wTotal:PC.mTotal;
-  var pct=Math.round((day/total)*100);
-  var periodWord=isWeek?"week":"month";
-
+  var pct=Math.round((day/total)*100),pw=isWeek?"week":"month";
   if(mode==="C"){
-    return'<div class="partial-banner warn">'
-      +'<div class="pb-icon">⚠️</div>'
-      +'<div class="pb-body">'
-      +'<div class="pb-title">Partial '+periodWord+' detected — Comparable Basis</div>'
+    return'<div class="partial-banner warn"><div class="pb-icon">⚠️</div><div class="pb-body">'
+      +'<div class="pb-title">Partial '+pw+' — Comparable Basis</div>'
       +'<div class="pb-sub">Today is day <strong>'+day+' of '+total+'</strong> ('+pct+'% complete). '
-      +'Prior '+periodWord+' <strong>Sales & Profit scaled to '+pct+'%</strong> for like-for-like comparison. '
-      +'Margin % is recalculated as Profit ÷ Sales — never scaled directly.</div>'
-      +'</div></div>';
-  } else {
-    return'<div class="partial-banner info">'
-      +'<div class="pb-icon">📈</div>'
-      +'<div class="pb-body">'
-      +'<div class="pb-title">Partial '+periodWord+' — Full Period Projection</div>'
-      +'<div class="pb-sub">Today is day <strong>'+day+' of '+total+'</strong> ('+pct+'% complete). '
-      +'Current '+periodWord+' <strong>Sales & Profit extrapolated to 100%</strong> at current run-rate (÷'+pct+'%). '
-      +'Margin % = Profit ÷ Sales and reflects actual mix to date — it is not projected.</div>'
+      +'Prior '+pw+' <strong>Sales & Profit scaled to '+pct+'%</strong> for like-for-like comparison. '
+      +'Margin % = Profit ÷ Sales, never scaled directly.</div>'
       +'</div></div>';
   }
+  return'<div class="partial-banner info"><div class="pb-icon">📈</div><div class="pb-body">'
+    +'<div class="pb-title">Partial '+pw+' — Full Period Projection</div>'
+    +'<div class="pb-sub">Today is day <strong>'+day+' of '+total+'</strong> ('+pct+'% complete). '
+    +'Current '+pw+' <strong>Sales & Profit extrapolated ÷'+pct+'%</strong> at current run-rate. '
+    +'Margin % reflects actual mix to date — not projected.</div>'
+    +'</div></div>';
 }
 
 function projToggleHtml(sec){
   if(!isPartial(sec))return"";
   var mode=PROJ[sec];
-  return'<div class="proj-toggle">'
-    +'<span style="font-size:12px;color:#6b7280;font-weight:500">Comparison mode:</span>'
+  return'<div class="proj-toggle"><span style="font-size:12px;color:#6b7280;font-weight:500">Comparison mode:</span>'
     +'<button class="proj-btn '+(mode==="C"?"active-c":"")+'" onclick="setProj(\''+sec+'\',\'C\')">⚖️ Comparable Basis</button>'
     +'<button class="proj-btn '+(mode==="A"?"active-a":"")+'" onclick="setProj(\''+sec+'\',\'A\')">📈 Project Full Period</button>'
     +'</div>';
@@ -727,19 +713,20 @@ function projToggleHtml(sec){
 
 function insLevelBlock(title,mv,sec,level){
   var pill=mv.n===mv.total?"all "+mv.total:mv.n+" of "+mv.total+" shown";
+  var legend=chipLegendHtml(level);
   var h='<div class="ins-level">';
   h+='<div class="ins-level-hdr">'+title+'<span class="pill">'+pill+'</span></div>';
+  h+=legend;
   h+='<div class="sec-sub-hdr">📈 Sales Movement</div>';
   h+='<div class="ins-cols">';
-  h+='<div class="ins-half"><div class="ins-half-hdr gain">🔺 Top Gainers</div>'+moverRows(mv.topS,sec,level)+'</div>';
-  h+='<div class="ins-half"><div class="ins-half-hdr loss">🔻 Top Decliners</div>'+moverRows(mv.botS,sec,level)+'</div>';
+  h+='<div class="ins-half"><div class="ins-half-hdr gain"><span class="tri-up">▲</span> Top Gainers</div>'+moverRows(mv.topS,sec,level)+'</div>';
+  h+='<div class="ins-half"><div class="ins-half-hdr loss"><span class="tri-dn">▼</span> Top Decliners</div>'+moverRows(mv.botS,sec,level)+'</div>';
   h+='</div>';
   h+='<div class="sec-sub-hdr">📊 Margin Movement</div>';
   h+='<div class="ins-cols">';
-  h+='<div class="ins-half"><div class="ins-half-hdr gain">🔺 Margin Improvers</div>'+moverRows(mv.topM,sec,level)+'</div>';
-  h+='<div class="ins-half"><div class="ins-half-hdr loss">🔻 Margin Decliners</div>'+moverRows(mv.botM,sec,level)+'</div>';
-  h+='</div>';
-  h+='</div>';
+  h+='<div class="ins-half"><div class="ins-half-hdr gain"><span class="tri-up">▲</span> Margin Improvers</div>'+moverRows(mv.topM,sec,level)+'</div>';
+  h+='<div class="ins-half"><div class="ins-half-hdr loss"><span class="tri-dn">▼</span> Margin Decliners</div>'+moverRows(mv.botM,sec,level)+'</div>';
+  h+='</div></div>';
   return h;
 }
 
@@ -750,15 +737,16 @@ function renderInsights(sec){
   if(periods.length<2){el.innerHTML='<div class="no-data">Need at least 2 periods to compare.</div>';return;}
 
   var curP=periods[periods.length-1],prevP=periods[periods.length-2];
-  var ist=S[sec].ins;
-  var html="";
+  var ist=S[sec].ins,html="";
 
-  // Period bar
-  html+='<div class="ins-period-bar">Comparing <strong>'+prevP+'</strong><span class="arrow">→</span><strong>'+curP+'</strong>'
-    +(isPartial(sec)?'<span class="proj-mode-badge '+(PROJ[sec]==="C"?"c":"a")+'" style="margin-left:auto">'+(PROJ[sec]==="C"?"⚖️ Comparable":"📈 Projected")+'</span>':'<span style="margin-left:auto;font-size:11px;color:#9ca3af">Complete period</span>')
+  // Period bar — specific names
+  var cLbl=periodLabel(curP,sec),pLbl=periodLabel(prevP,sec);
+  html+='<div class="ins-period-bar">Comparing <strong>'+pLbl+'</strong><span class="arrow">→</span><strong>'+cLbl+'</strong>'
+    +(isPartial(sec)
+      ?'<span class="proj-mode-badge '+(PROJ[sec]==="C"?"c":"a")+'" style="margin-left:auto">'+(PROJ[sec]==="C"?"⚖️ Comparable":"📈 Projected")+'</span>'
+      :'<span style="margin-left:auto;font-size:11px;color:#9ca3af">Complete period</span>')
     +'</div>';
 
-  // Partial controls
   html+=projToggleHtml(sec);
   html+=partialBannerHtml(sec);
 
@@ -766,30 +754,24 @@ function renderInsights(sec){
   html+='<div class="drill-breadcrumb"><span class="bc-item" onclick="drillIns(\''+sec+'\',\'reset\',null)">All Categories</span>';
   if(ist.level==="brand"&&ist.cat){
     html+='<span class="bc-sep">›</span><span class="bc-item" onclick="drillIns(\''+sec+'\',\'cat\',\''+escQ(ist.cat)+'\')">'+ist.cat+'</span><span class="bc-sep">›</span><span class="bc-cur">By Brand</span>';
-  } else if(ist.level==="sku"&&ist.cat&&ist.brand){
+  } else if(ist.level==="sku"){
     html+='<span class="bc-sep">›</span><span class="bc-item" onclick="drillIns(\''+sec+'\',\'cat\',\''+escQ(ist.cat)+'\')">'+ist.cat+'</span>'
       +'<span class="bc-sep">›</span><span class="bc-item" onclick="drillIns(\''+sec+'\',\'brand\',\''+escQ(ist.brand)+'\')">'+ist.brand+'</span>'
       +'<span class="bc-sep">›</span><span class="bc-cur">SKUs</span>';
   }
   html+='</div>';
 
-  var scopedData=data;
-  var title="";
-
   if(ist.level==="category"){
     html+=overallKPIHtml(data,curP,prevP,sec);
-    var mv=buildMovers(data,"category",curP,prevP,null,null,sec);
-    html+=insLevelBlock("Category Movers",mv,sec,"category");
+    html+=insLevelBlock("Category Movers",buildMovers(data,"category",curP,prevP,null,null,sec),sec,"category");
   } else if(ist.level==="brand"&&ist.cat){
-    scopedData=data.filter(function(d){return d.category===ist.cat;});
-    html+=overallKPIHtml(scopedData,curP,prevP,sec);
-    var mv2=buildMovers(data,"brand",curP,prevP,"category",ist.cat,sec);
-    html+=insLevelBlock("Brands in "+ist.cat,mv2,sec,"brand");
+    var sd=data.filter(function(d){return d.category===ist.cat;});
+    html+=overallKPIHtml(sd,curP,prevP,sec);
+    html+=insLevelBlock("Brands in "+ist.cat,buildMovers(data,"brand",curP,prevP,"category",ist.cat,sec),sec,"brand");
   } else if(ist.level==="sku"&&ist.brand){
-    scopedData=data.filter(function(d){return d.category===ist.cat&&d.brand===ist.brand;});
-    html+=overallKPIHtml(scopedData,curP,prevP,sec);
-    var mv3=buildMovers(data,"name",curP,prevP,"brand",ist.brand,sec);
-    html+=insLevelBlock("SKUs in "+ist.brand,mv3,sec,"sku");
+    var sd2=data.filter(function(d){return d.category===ist.cat&&d.brand===ist.brand;});
+    html+=overallKPIHtml(sd2,curP,prevP,sec);
+    html+=insLevelBlock("SKUs in "+ist.brand,buildMovers(data,"name",curP,prevP,"brand",ist.brand,sec),sec,"sku");
   }
 
   el.innerHTML=html;
