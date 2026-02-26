@@ -10,6 +10,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,sans-serif;background:#f9fafb;color:#111;padding:16px}
 h1{font-size:20px;font-weight:700}
+h2{font-size:16px;font-weight:700;color:#1e1b4b;padding:12px 0 4px}
 .sub{font-size:11px;color:#9ca3af;margin-top:2px}
 .card{background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:16px;margin-bottom:12px}
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
@@ -17,8 +18,8 @@ h1{font-size:20px;font-weight:700}
 .kpi-label{font-size:11px;color:#9ca3af}
 .kpi-val{font-size:22px;font-weight:700;margin-top:2px}
 .kpi-val.neg{color:#dc2626}
-.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:12px;margin-bottom:12px}
-.sep{width:1px;height:16px;background:#e5e7eb}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:12px;margin-bottom:12px}
+.sep{width:1px;height:16px;background:#e5e7eb;align-self:center}
 button{cursor:pointer;border:none;border-radius:20px;font-size:12px;font-weight:500;padding:4px 12px;background:#f3f4f6;color:#374151}
 button.ai{background:#4f46e5;color:#fff}
 button.ap{background:#7c3aed;color:#fff}
@@ -31,20 +32,38 @@ th{text-align:left;font-size:11px;font-weight:600;color:#6b7280;padding:8px 12px
 td{font-size:12px;padding:7px 12px;border-bottom:1px solid #f9fafb}
 tr:nth-child(even) td{background:#f9fafb}
 .badge{padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
-.bg{background:#d1fae5;color:#065f46}
-.by{background:#fef3c7;color:#92400e}
-.bo{background:#ffedd5;color:#9a3412}
-.br{background:#fee2e2;color:#991b1b}
-.gn{color:#059669;font-weight:500}
-.rd{color:#dc2626;font-weight:500}
+.bg{background:#d1fae5;color:#065f46}.by{background:#fef3c7;color:#92400e}
+.bo{background:#ffedd5;color:#9a3412}.br{background:#fee2e2;color:#991b1b}
+.gn{color:#059669;font-weight:500}.rd{color:#dc2626;font-weight:500}
 .trunc{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
 .live{font-size:11px;color:#059669;background:#d1fae5;padding:4px 10px;border-radius:20px;font-weight:500}
-.hrow{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.hrow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .hbtns{display:flex;gap:8px;align-items:center}
 .sbtn{font-size:12px;padding:6px 12px;border-radius:8px;cursor:pointer;border:1px solid #e5e7eb;background:#f3f4f6;color:#374151}
 .sbtn.bl{background:#4f46e5;color:#fff;border-color:#4f46e5}
 .scroll-table{max-height:400px;overflow-y:auto}
-#chart-wrap{position:relative;width:100%;height:380px}
+.chart-wrap{position:relative;width:100%;height:380px}
+.divider{border:none;border-top:2px solid #e5e7eb;margin:24px 0}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.section-badge-wow{background:#eef2ff;color:#4f46e5;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.section-badge-mom{background:#fef3c7;color:#92400e;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+
+/* ── TAG FILTER ── */
+.filter-wrap{display:flex;flex-direction:column;gap:6px;flex:1;min-width:200px}
+.tags-row{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.tag{display:inline-flex;align-items:center;gap:4px;background:#eef2ff;color:#4f46e5;border-radius:20px;padding:3px 8px;font-size:11px;font-weight:600}
+.tag-x{cursor:pointer;font-size:13px;line-height:1;color:#6366f1;font-weight:700}
+.tag-x:hover{color:#dc2626}
+.clear-all{font-size:11px;color:#9ca3af;cursor:pointer;text-decoration:underline;white-space:nowrap}
+.clear-all:hover{color:#dc2626}
+.search-row{position:relative;display:flex;align-items:center;gap:6px}
+.search-input{border:1px solid #e5e7eb;border-radius:8px;padding:4px 10px;font-size:12px;outline:none;font-family:inherit;background:#fff;width:180px}
+.search-input:focus{border-color:#6366f1}
+.dim-drop{display:none;position:absolute;top:100%;left:0;min-width:220px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:999;max-height:240px;overflow-y:auto;margin-top:4px}
+.drop-item{padding:8px 12px;font-size:12px;cursor:pointer;color:#111;display:flex;align-items:center;gap:8px}
+.drop-item:hover,.drop-item.active{background:#eef2ff;color:#4f46e5}
+.drop-item.focused{background:#f3f4f6}
+.drop-item.active.focused{background:#eef2ff}
 </style>
 </head>
 <body>
@@ -56,47 +75,98 @@ tr:nth-child(even) td{background:#f9fafb}
     <div><h1>Margin Dashboard</h1><div class="sub" id="data-info"></div></div>
     <div class="hbtns">
       <span class="live">● Live</span>
-      <button class="sbtn bl" onclick="loadData()">↺ Refresh</button>
+      <button class="sbtn bl" onclick="loadAll()">↺ Refresh</button>
     </div>
   </div>
+
+  <!-- ── WEEK ON WEEK ── -->
+  <div class="section-header">
+    <h2>📅 Week on Week View</h2>
+    <span class="section-badge-wow" id="wow-info"></span>
+  </div>
   <div class="kpis">
-    <div class="kpi"><div class="kpi-label">Total Sales</div><div class="kpi-val" id="kpi-sales"></div></div>
-    <div class="kpi"><div class="kpi-label">Total Profit</div><div class="kpi-val" id="kpi-profit"></div></div>
-    <div class="kpi"><div class="kpi-label">Overall Margin</div><div class="kpi-val" id="kpi-margin"></div></div>
+    <div class="kpi"><div class="kpi-label">Total Sales</div><div class="kpi-val" id="w-kpi-sales"></div></div>
+    <div class="kpi"><div class="kpi-label">Total Profit</div><div class="kpi-val" id="w-kpi-profit"></div></div>
+    <div class="kpi"><div class="kpi-label">Overall Margin</div><div class="kpi-val" id="w-kpi-margin"></div></div>
   </div>
   <div class="controls">
-    <button onclick="setPeriod('week')" id="btn-week" class="ai">Week</button>
-    <button onclick="setPeriod('month')" id="btn-month">Month</button>
-    <button onclick="setPeriod('quarter')" id="btn-quarter">Quarter</button>
+    <button onclick="setView('w','category')" id="w-btn-cat" class="ap">By Category</button>
+    <button onclick="setView('w','brand')" id="w-btn-brand">By Brand</button>
     <div class="sep"></div>
-    <button onclick="setView('category')" id="btn-cat" class="ap">By Category</button>
-    <button onclick="setView('brand')" id="btn-brand">By Brand</button>
+    <button onclick="setMetric('w','margin')" id="w-btn-margin" class="aa">Margin %</button>
+    <button onclick="setMetric('w','profit')" id="w-btn-profit">Profit ₹</button>
+    <button onclick="setMetric('w','sales')" id="w-btn-sales">Sales ₹</button>
+    <button onclick="setMetric('w','combo')" id="w-btn-combo">Sales + Margin</button>
     <div class="sep"></div>
-    <button onclick="setMetric('margin')" id="btn-margin" class="aa">Margin %</button>
-    <button onclick="setMetric('profit')" id="btn-profit">Profit ₹</button>
-    <button onclick="setMetric('sales')" id="btn-sales">Sales ₹</button>
-    <button onclick="setMetric('combo')" id="btn-combo">Sales + Margin</button>
-    <div class="sep"></div>
-    <div style="position:relative;display:inline-block">
-      <input type="text" id="dim-search" placeholder="All categories…" autocomplete="off"
-        style="width:160px;border:1px solid #e5e7eb;border-radius:8px;padding:4px 10px;font-size:12px;outline:none;font-family:inherit;background:#fff"
-        oninput="onSearch(this.value)" onfocus="onSearch(this.value)" onblur="setTimeout(closeSearch,200)"/>
-      <div id="dim-drop" style="display:none;position:absolute;top:100%;left:0;min-width:200px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:999;max-height:220px;overflow-y:auto;margin-top:4px"></div>
+    <div class="filter-wrap">
+      <div class="search-row">
+        <input class="search-input" id="w-search" placeholder="Search categories…" autocomplete="off"
+          oninput="onSearch('w')" onkeydown="onKey('w',event)" onfocus="openDrop('w')"/>
+        <div class="dim-drop" id="w-drop"></div>
+        <span class="clear-all" id="w-clear" style="display:none" onclick="clearAll('w')">Clear all</span>
+      </div>
+      <div class="tags-row" id="w-tags"></div>
     </div>
   </div>
   <div class="tabs">
-    <button class="tab active" id="tab-charts" onclick="setTab('charts')">📊 Charts</button>
-    <button class="tab" id="tab-summary" onclick="setTab('summary')">📋 Summary</button>
-    <button class="tab" id="tab-skus" onclick="setTab('skus')">🔍 SKU Detail</button>
+    <button class="tab active" id="w-tab-charts" onclick="setTab('w','charts')">📊 Charts</button>
+    <button class="tab" id="w-tab-summary" onclick="setTab('w','summary')">📋 Summary</button>
+    <button class="tab" id="w-tab-skus" onclick="setTab('w','skus')">🔍 SKU Detail</button>
   </div>
-  <div id="pane-charts" class="card"><div id="chart-wrap"><canvas id="main-chart"></canvas></div></div>
-  <div id="pane-summary" class="card" style="display:none;padding:0;overflow:hidden"><table id="summary-table"></table></div>
-  <div id="pane-skus" class="card" style="display:none;padding:0;overflow:hidden">
+  <div id="w-pane-charts" class="card"><div class="chart-wrap"><canvas id="w-chart"></canvas></div></div>
+  <div id="w-pane-summary" class="card" style="display:none;padding:0;overflow:hidden"><table id="w-summary-table"></table></div>
+  <div id="w-pane-skus" class="card" style="display:none;padding:0;overflow:hidden">
     <div style="padding:8px 12px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between">
-      <span style="font-size:12px;font-weight:600;color:#374151">SKUs — worst margin first</span>
-      <span style="font-size:11px;color:#9ca3af" id="sku-count"></span>
+      <span style="font-size:12px;font-weight:600">SKUs — worst margin first</span>
+      <span style="font-size:11px;color:#9ca3af" id="w-sku-count"></span>
     </div>
-    <div class="scroll-table"><table id="sku-table"></table></div>
+    <div class="scroll-table"><table id="w-sku-table"></table></div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── MONTH ON MONTH ── -->
+  <div class="section-header">
+    <h2>📆 Month on Month View</h2>
+    <span class="section-badge-mom" id="mom-info"></span>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-label">Total Sales</div><div class="kpi-val" id="m-kpi-sales"></div></div>
+    <div class="kpi"><div class="kpi-label">Total Profit</div><div class="kpi-val" id="m-kpi-profit"></div></div>
+    <div class="kpi"><div class="kpi-label">Overall Margin</div><div class="kpi-val" id="m-kpi-margin"></div></div>
+  </div>
+  <div class="controls">
+    <button onclick="setView('m','category')" id="m-btn-cat" class="ap">By Category</button>
+    <button onclick="setView('m','brand')" id="m-btn-brand">By Brand</button>
+    <div class="sep"></div>
+    <button onclick="setMetric('m','margin')" id="m-btn-margin" class="aa">Margin %</button>
+    <button onclick="setMetric('m','profit')" id="m-btn-profit">Profit ₹</button>
+    <button onclick="setMetric('m','sales')" id="m-btn-sales">Sales ₹</button>
+    <button onclick="setMetric('m','combo')" id="m-btn-combo">Sales + Margin</button>
+    <div class="sep"></div>
+    <div class="filter-wrap">
+      <div class="search-row">
+        <input class="search-input" id="m-search" placeholder="Search categories…" autocomplete="off"
+          oninput="onSearch('m')" onkeydown="onKey('m',event)" onfocus="openDrop('m')"/>
+        <div class="dim-drop" id="m-drop"></div>
+        <span class="clear-all" id="m-clear" style="display:none" onclick="clearAll('m')">Clear all</span>
+      </div>
+      <div class="tags-row" id="m-tags"></div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" id="m-tab-charts" onclick="setTab('m','charts')">📊 Charts</button>
+    <button class="tab" id="m-tab-summary" onclick="setTab('m','summary')">📋 Summary</button>
+    <button class="tab" id="m-tab-skus" onclick="setTab('m','skus')">🔍 SKU Detail</button>
+  </div>
+  <div id="m-pane-charts" class="card"><div class="chart-wrap"><canvas id="m-chart"></canvas></div></div>
+  <div id="m-pane-summary" class="card" style="display:none;padding:0;overflow:hidden"><table id="m-summary-table"></table></div>
+  <div id="m-pane-skus" class="card" style="display:none;padding:0;overflow:hidden">
+    <div style="padding:8px 12px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between">
+      <span style="font-size:12px;font-weight:600">SKUs — worst margin first</span>
+      <span style="font-size:11px;color:#9ca3af" id="m-sku-count"></span>
+    </div>
+    <div class="scroll-table"><table id="m-sku-table"></table></div>
   </div>
 </div>
 
@@ -104,487 +174,342 @@ tr:nth-child(even) td{background:#f9fafb}
   <div style="font-size:32px;margin-bottom:12px">⚠️</div>
   <div style="font-size:14px;font-weight:600;margin-bottom:8px">Could not load data</div>
   <div id="err-msg" style="font-size:12px;color:#6b7280;margin-bottom:16px"></div>
-  <button class="sbtn bl" onclick="loadData()">Try Again</button>
+  <button class="sbtn bl" onclick="loadAll()">Try Again</button>
 </div>
 
 <script>
-var SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBtk0sRVzaiYZmxt7ahLyTUQ_b9S6EZ0fovOBVg1g60fAlSClGHZgTx3fAA-4l7YQsIVNfnQOYtzoa/pub?gid=1875279715&single=true&output=csv";
-var COLORS = ["#6366f1","#f59e0b","#10b981","#ef4444","#8b5cf6","#ec4899","#14b8a6","#f97316","#3b82f6","#84cc16","#e11d48","#0ea5e9"];
-var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-var allData = [];
-var chartInst = null;
-var state = {period:"week", view:"category", metric:"margin", filter:"All"};
-
-// Register datalabels plugin globally
 Chart.register(ChartDataLabels);
 
-// ── FORMATTERS ───────────────────────────────────────────────────────────────
-function clean(v){ return parseFloat(String(v).replace(/,/g,"").replace(/%/g,"")) || 0; }
+var WEEK_URL  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBtk0sRVzaiYZmxt7ahLyTUQ_b9S6EZ0fovOBVg1g60fAlSClGHZgTx3fAA-4l7YQsIVNfnQOYtzoa/pub?gid=1875279715&single=true&output=csv";
+var MONTH_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBtk0sRVzaiYZmxt7ahLyTUQ_b9S6EZ0fovOBVg1g60fAlSClGHZgTx3fAA-4l7YQsIVNfnQOYtzoa/pub?gid=1503333489&single=true&output=csv";
+var COLORS = ["#6366f1","#f59e0b","#10b981","#ef4444","#8b5cf6","#ec4899","#14b8a6","#f97316","#3b82f6","#84cc16","#e11d48","#0ea5e9"];
+var MONTH_ORDER = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
 
-function INR(v){
-  return "₹" + Math.abs(v).toLocaleString("en-IN", {maximumFractionDigits:0});
-}
+var wData=[], mData=[];
+var wChart=null, mChart=null;
 
+// State per section: view, metric, selected (array), focusIdx
+var S = {
+  w: {view:"category", metric:"margin", selected:[], focusIdx:-1},
+  m: {view:"category", metric:"margin", selected:[], focusIdx:-1}
+};
+
+// ── FORMATTERS ────────────────────────────────────────────────────────────────
+function clean(v){ return parseFloat(String(v).replace(/,/g,"").replace(/%/g,""))||0; }
+function INR(v){ return "₹"+Math.abs(v).toLocaleString("en-IN",{maximumFractionDigits:0}); }
 function fmtVal(v){
-  if(v == null) return null;
-  var a = Math.abs(v);
-  var s = v < 0 ? "-" : "";
-  if(a >= 100000) return s + "₹" + (a / 100000).toFixed(1) + "L";
-  if(a >= 1000)   return s + "₹" + (a / 1000).toFixed(1) + "K";
-  return s + "₹" + a.toFixed(0);
+  if(v==null) return null;
+  var a=Math.abs(v),s=v<0?"-":"";
+  if(a>=100000) return s+"₹"+(a/100000).toFixed(1)+"L";
+  if(a>=1000)   return s+"₹"+(a/1000).toFixed(1)+"K";
+  return s+"₹"+a.toFixed(0);
 }
+function fmtPct(v){ return v==null?null:v.toFixed(1)+"%"; }
+function badge(v){ var c=v>=15?"bg":v>=5?"by":v>=0?"bo":"br"; return '<span class="badge '+c+'">'+v.toFixed(1)+'%</span>'; }
+function monthSortKey(l){ var p=l.trim().split(/[\s']+/),m=MONTH_ORDER[p[0]]||0,y=parseInt(p[1]||"0"); return (y<50?2000+y:1900+y)*100+m; }
 
-function fmtPct(v){
-  if(v == null) return null;
-  return v.toFixed(1) + "%";
-}
-
-function badge(v){
-  var cls = v >= 15 ? "bg" : v >= 5 ? "by" : v >= 0 ? "bo" : "br";
-  return '<span class="badge ' + cls + '">' + v.toFixed(1) + '%</span>';
-}
-
-// ── DATE HELPERS ─────────────────────────────────────────────────────────────
-function wkToDate(w){
-  var d = new Date(2025, 0, 1);
-  d.setDate(d.getDate() + (w - 1) * 7);
-  return d;
-}
-function mLabel(w){ var d = wkToDate(w); return MONTHS[d.getMonth()] + " '" + String(d.getFullYear()).slice(2); }
-function qLabel(w){ var d = wkToDate(w); return "Q" + (Math.floor(d.getMonth() / 3) + 1) + " '" + String(d.getFullYear()).slice(2); }
-function pKey(w, p){ return p === "week" ? "W" + w : p === "month" ? mLabel(w) : qLabel(w); }
-function pSort(w, p){
-  if(p === "week") return w;
-  if(p === "month") return wkToDate(w).getFullYear() * 100 + wkToDate(w).getMonth();
-  return wkToDate(w).getFullYear() * 10 + Math.floor(wkToDate(w).getMonth() / 3);
-}
-
-// ── CSV PARSER ───────────────────────────────────────────────────────────────
-function parseCSV(text){
-  var lines = text.trim().split("\n").filter(function(l){ return l.trim(); });
-  var hdrs = lines[0].split(",").map(function(h){ return h.trim().toLowerCase().replace(/"/g, ""); });
-  function ix(h){ return hdrs.findIndex(function(x){ return x.includes(h); }); }
-  var iN=ix("item"), iS=ix("sku"), iC=ix("category"), iB=ix("brand"),
-      iQ=ix("qty"), iCo=ix("total cost"), iSa=ix("total sales"),
-      iP=ix("profit"), iM=ix("margin"), iW=ix("week");
-  var rows = [];
-  for(var i = 1; i < lines.length; i++){
-    var l = lines[i], c = [], cur = "", inQ = false;
-    for(var j = 0; j < l.length; j++){
-      if(l[j] === '"') inQ = !inQ;
-      else if(l[j] === ',' && !inQ){ c.push(cur.trim()); cur = ""; }
-      else cur += l[j];
+// ── CSV PARSER ────────────────────────────────────────────────────────────────
+function parseCSV(text, periodCol){
+  var lines=text.trim().split("\n").filter(function(l){return l.trim();});
+  var hdrs=lines[0].split(",").map(function(h){return h.trim().toLowerCase().replace(/"/g,"");});
+  function ix(h){return hdrs.findIndex(function(x){return x.includes(h);});}
+  var iN=ix("item"),iS=ix("sku"),iC=ix("category"),iB=ix("brand"),
+      iQ=ix("qty"),iCo=ix("total cost"),iSa=ix("total sales"),
+      iP=ix("profit"),iM=ix("margin"),iPer=ix(periodCol.toLowerCase());
+  var rows=[];
+  for(var i=1;i<lines.length;i++){
+    var l=lines[i],c=[],cur="",inQ=false;
+    for(var j=0;j<l.length;j++){
+      if(l[j]==='"') inQ=!inQ;
+      else if(l[j]===','&&!inQ){c.push(cur.trim());cur="";}
+      else cur+=l[j];
     }
     c.push(cur.trim());
-    if(c.length < 5) continue;
-    var r = {
-      name:     (c[iN]  || "").replace(/"/g, "").trim(),
-      sku:      (c[iS]  || "").replace(/"/g, "").trim(),
-      category: (c[iC]  || "").replace(/"/g, "").trim(),
-      brand:    (c[iB]  || "").replace(/"/g, "").trim(),
-      qty:      clean(c[iQ]),
-      cost:     clean(c[iCo]),
-      sales:    clean(c[iSa]),
-      profit:   clean(c[iP]),
-      margin:   clean(c[iM]),
-      week:     parseInt(c[iW]) || 1
-    };
-    if(r.name && r.category) rows.push(r);
+    if(c.length<5) continue;
+    var r={name:(c[iN]||"").replace(/"/g,"").trim(),sku:(c[iS]||"").replace(/"/g,"").trim(),
+      category:(c[iC]||"").replace(/"/g,"").trim(),brand:(c[iB]||"").replace(/"/g,"").trim(),
+      qty:clean(c[iQ]),cost:clean(c[iCo]),sales:clean(c[iSa]),profit:clean(c[iP]),
+      margin:clean(c[iM]),period:(c[iPer]||"").replace(/"/g,"").trim()};
+    if(r.name&&r.category&&r.period) rows.push(r);
   }
   return rows;
 }
 
-// ── DATA LOADING ─────────────────────────────────────────────────────────────
-async function loadData(){
-  document.getElementById("loading").style.display = "block";
-  document.getElementById("dashboard").style.display = "none";
-  document.getElementById("err-screen").style.display = "none";
-  try {
-    var text = "";
-    try {
-      var r = await fetch(SHEET_URL);
-      if(!r.ok) throw new Error("direct failed");
-      text = await r.text();
-    } catch(e1) {
-      var r2 = await fetch("https://corsproxy.io/?" + encodeURIComponent(SHEET_URL));
-      if(!r2.ok) throw new Error("HTTP " + r2.status);
-      text = await r2.text();
-    }
-    var parsed = parseCSV(text);
-    if(!parsed.length) throw new Error("No rows found — check column headers.");
-    allData = parsed;
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-    render();
-  } catch(e) {
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("err-screen").style.display = "block";
-    document.getElementById("err-msg").textContent = e.message;
+// ── FETCH ─────────────────────────────────────────────────────────────────────
+async function fetchCSV(url){
+  try{ var r=await fetch(url); if(!r.ok) throw new Error("x"); return await r.text(); }
+  catch(e){ var r2=await fetch("https://corsproxy.io/?"+encodeURIComponent(url)); if(!r2.ok) throw new Error("HTTP "+r2.status); return await r2.text(); }
+}
+
+async function loadAll(){
+  document.getElementById("loading").style.display="block";
+  document.getElementById("dashboard").style.display="none";
+  document.getElementById("err-screen").style.display="none";
+  try{
+    var res=await Promise.all([fetchCSV(WEEK_URL),fetchCSV(MONTH_URL)]);
+    wData=parseCSV(res[0],"week");
+    mData=parseCSV(res[1],"month");
+    if(!wData.length&&!mData.length) throw new Error("No data found.");
+    document.getElementById("loading").style.display="none";
+    document.getElementById("dashboard").style.display="block";
+    document.getElementById("wow-info").textContent=wData.length+" rows · "+[...new Set(wData.map(function(d){return d.sku;}))].length+" SKUs";
+    document.getElementById("mom-info").textContent=mData.length+" rows · "+[...new Set(mData.map(function(d){return d.sku;}))].length+" SKUs";
+    document.getElementById("data-info").textContent="Week & Month tabs loaded";
+    renderSection("w"); renderSection("m");
+  }catch(e){
+    document.getElementById("loading").style.display="none";
+    document.getElementById("err-screen").style.display="block";
+    document.getElementById("err-msg").textContent=e.message;
   }
+}
+
+// ── DIMS ──────────────────────────────────────────────────────────────────────
+function getData(sec){ return sec==="w"?wData:mData; }
+function getDims(sec){
+  var key=S[sec].view==="category"?"category":"brand";
+  return [...new Set(getData(sec).map(function(d){return d[key];}))].filter(Boolean).sort();
+}
+function getFiltered(sec){
+  var data=getData(sec), st=S[sec], key=st.view==="category"?"category":"brand";
+  if(!st.selected.length) return data;
+  return data.filter(function(d){return st.selected.indexOf(d[key])>=0;});
+}
+function getActiveDims(sec){
+  var all=getDims(sec), st=S[sec];
+  return st.selected.length?st.selected.filter(function(d){return all.indexOf(d)>=0;}):all;
 }
 
 // ── STATE CONTROLS ────────────────────────────────────────────────────────────
-function setPeriod(p){
-  state.period = p;
-  ["week","month","quarter"].forEach(function(x){
-    document.getElementById("btn-" + x).className = (x === p) ? "ai" : "";
-  });
-  render();
+function setView(sec,v){
+  S[sec].view=v; S[sec].selected=[];
+  document.getElementById(sec+"-btn-cat").className=v==="category"?"ap":"";
+  document.getElementById(sec+"-btn-brand").className=v==="brand"?"ap":"";
+  document.getElementById(sec+"-search").placeholder="Search "+v+"s…";
+  renderSection(sec); updateTags(sec);
 }
-function setView(v){
-  state.view = v;
-  state.filter = "All";
-  document.getElementById("btn-cat").className   = (v === "category") ? "ap" : "";
-  document.getElementById("btn-brand").className = (v === "brand")    ? "ap" : "";
-  document.getElementById("dim-search").value = "";
-  document.getElementById("dim-search").placeholder = "All " + v + "s…";
-  render();
-}
-function setMetric(m){
-  state.metric = m;
+function setMetric(sec,m){
+  S[sec].metric=m;
   ["margin","profit","sales","combo"].forEach(function(x){
-    document.getElementById("btn-" + x).className = (x === m) ? "aa" : "";
+    document.getElementById(sec+"-btn-"+x).className=x===m?"aa":"";
   });
-  render();
+  renderSection(sec);
 }
-function setTab(t){
+function setTab(sec,t){
   ["charts","summary","skus"].forEach(function(x){
-    document.getElementById("tab-"  + x).className = "tab" + (x === t ? " active" : "");
-    document.getElementById("pane-" + x).style.display = (x === t) ? "block" : "none";
+    document.getElementById(sec+"-tab-"+x).className="tab"+(x===t?" active":"");
+    document.getElementById(sec+"-pane-"+x).style.display=x===t?"block":"none";
   });
-  render();
+  renderSection(sec);
 }
 
-// ── SEARCH ────────────────────────────────────────────────────────────────────
-function getDims(){
-  var key = state.view === "category" ? "category" : "brand";
-  return [...new Set(allData.map(function(d){ return d[key]; }))].filter(Boolean).sort();
+// ── SEARCH & TAG CONTROLS ─────────────────────────────────────────────────────
+function openDrop(sec){ onSearch(sec); }
+
+function onSearch(sec){
+  var q=document.getElementById(sec+"-search").value;
+  var all=getDims(sec);
+  var matches=q.trim()===""?all:all.filter(function(d){return d.toLowerCase().includes(q.toLowerCase());});
+  // exclude already selected
+  matches=matches.filter(function(d){return S[sec].selected.indexOf(d)<0;});
+  S[sec].focusIdx=-1;
+  renderDrop(sec, matches, q);
 }
-function getFiltered(){
-  if(state.filter === "All") return allData;
-  var key = state.view === "category" ? "category" : "brand";
-  return allData.filter(function(d){ return d[key] === state.filter; });
-}
-function onSearch(q){
-  var all = getDims();
-  var list = ["All"].concat(all);
-  var matches = q.trim() === "" ? list : list.filter(function(d){ return d.toLowerCase().includes(q.toLowerCase()); });
-  var drop = document.getElementById("dim-drop");
-  if(!matches.length){ drop.style.display = "none"; return; }
-  drop.innerHTML = matches.map(function(d){
-    var active = (d === state.filter);
-    var label = q.trim() ? d.replace(new RegExp("(" + q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&") + ")","gi"),'<strong style="color:#4f46e5">$1</strong>') : d;
-    return '<div onclick="selectDim(\'' + d.replace(/\\/g,"\\\\").replace(/'/g,"\\'") + '\')" ' +
-      'style="padding:8px 12px;font-size:12px;cursor:pointer;' +
-      'color:' + (active ? "#4f46e5" : "#111") + ';' +
-      'font-weight:' + (active ? "600" : "400") + ';' +
-      'background:' + (active ? "#eef2ff" : "#fff") + '" ' +
-      'onmouseover="this.style.background=\'#f3f4f6\'" ' +
-      'onmouseout="this.style.background=\'' + (active ? "#eef2ff" : "#fff") + '\'">' +
-      label + '</div>';
+
+function renderDrop(sec, items, q){
+  var drop=document.getElementById(sec+"-drop");
+  if(!items.length){drop.style.display="none";return;}
+  drop.innerHTML=items.map(function(d,i){
+    var label=q&&q.trim()?d.replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),'<strong style="color:#4f46e5">$1</strong>'):d;
+    return '<div class="drop-item" id="'+sec+'-di-'+i+'" onclick="selectDim(\''+sec+'\',\''+d.replace(/\\/g,"\\\\").replace(/'/g,"\\'")+'\')">'+label+'</div>';
   }).join("");
-  drop.style.display = "block";
+  drop.style.display="block";
 }
-function selectDim(d){
-  state.filter = d;
-  document.getElementById("dim-search").value = (d === "All") ? "" : d;
-  document.getElementById("dim-drop").style.display = "none";
-  render();
+
+function onKey(sec,e){
+  var drop=document.getElementById(sec+"-drop");
+  var items=drop.querySelectorAll(".drop-item");
+  var st=S[sec];
+  if(e.key==="ArrowDown"){
+    e.preventDefault();
+    st.focusIdx=Math.min(st.focusIdx+1,items.length-1);
+    highlightDrop(sec,items);
+  } else if(e.key==="ArrowUp"){
+    e.preventDefault();
+    st.focusIdx=Math.max(st.focusIdx-1,0);
+    highlightDrop(sec,items);
+  } else if(e.key==="Enter"){
+    e.preventDefault();
+    if(st.focusIdx>=0&&items[st.focusIdx]){
+      items[st.focusIdx].click();
+    }
+  } else if(e.key==="Escape"){
+    drop.style.display="none";
+  } else if(e.key==="Backspace"){
+    var inp=document.getElementById(sec+"-search");
+    if(inp.value===""&&st.selected.length){
+      st.selected.pop();
+      updateTags(sec);
+      renderSection(sec);
+      onSearch(sec);
+    }
+  }
 }
-function closeSearch(){ document.getElementById("dim-drop").style.display = "none"; }
+
+function highlightDrop(sec,items){
+  var idx=S[sec].focusIdx;
+  items.forEach(function(el,i){
+    el.classList.toggle("focused",i===idx);
+  });
+  if(items[idx]) items[idx].scrollIntoView({block:"nearest"});
+}
+
+function selectDim(sec,d){
+  if(S[sec].selected.indexOf(d)<0){
+    S[sec].selected.push(d);
+  }
+  document.getElementById(sec+"-search").value="";
+  document.getElementById(sec+"-drop").style.display="none";
+  S[sec].focusIdx=-1;
+  updateTags(sec);
+  renderSection(sec);
+  // re-focus input for next search
+  document.getElementById(sec+"-search").focus();
+}
+
+function removeDim(sec,d){
+  S[sec].selected=S[sec].selected.filter(function(x){return x!==d;});
+  updateTags(sec);
+  renderSection(sec);
+}
+
+function clearAll(sec){
+  S[sec].selected=[];
+  document.getElementById(sec+"-search").value="";
+  updateTags(sec);
+  renderSection(sec);
+}
+
+function updateTags(sec){
+  var sel=S[sec].selected;
+  var tagsEl=document.getElementById(sec+"-tags");
+  var clearEl=document.getElementById(sec+"-clear");
+  tagsEl.innerHTML=sel.map(function(d){
+    return '<span class="tag">'+d+'<span class="tag-x" onclick="removeDim(\''+sec+'\',\''+d.replace(/\\/g,"\\\\").replace(/'/g,"\\'")+'\')">×</span></span>';
+  }).join("");
+  clearEl.style.display=sel.length?"inline":"none";
+}
+
+// Close drop when clicking outside
+document.addEventListener("click",function(e){
+  ["w","m"].forEach(function(sec){
+    var wrap=document.getElementById(sec+"-search");
+    var drop=document.getElementById(sec+"-drop");
+    if(wrap&&drop&&!wrap.contains(e.target)&&!drop.contains(e.target)){
+      drop.style.display="none";
+    }
+  });
+});
 
 // ── CHART HELPERS ─────────────────────────────────────────────────────────────
-// Data label config for bar charts — shows above bar in ₹L / ₹K / ₹ format
 function dlBar(color){
-  return {
-    display: true,
-    anchor: "end",
-    align: "top",
-    offset: 2,
-    color: color,
-    font: { size: 10, weight: "600" },
-    formatter: function(v){ return (v == null) ? null : fmtVal(v); }
-  };
+  return{display:true,anchor:"end",align:"top",offset:2,color:color,font:{size:10,weight:"600"},formatter:function(v){return v==null?null:fmtVal(v);}};
 }
-// Data label config for line charts — shows above point with % sign
 function dlLine(color){
-  return {
-    display: true,
-    anchor: "end",
-    align: "top",
-    offset: 8,
-    color: color,
-    font: { size: 10, weight: "600" },
-    formatter: function(v){ return (v == null) ? null : fmtPct(v); }
-  };
+  return{display:true,anchor:"end",align:"top",offset:8,color:color,font:{size:10,weight:"600"},formatter:function(v){return v==null?null:fmtPct(v);}};
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
-function render(){
-  var fd = getFiltered();
-  var allDims = getDims();
-  var dims = (state.filter === "All") ? allDims : [state.filter];
-
-  // Sync search placeholder
-  if(state.filter === "All"){
-    document.getElementById("dim-search").placeholder = "All " + state.view + "s…";
-  }
+function renderSection(sec){
+  var st=S[sec], data=getData(sec);
+  var dimKey=st.view==="category"?"category":"brand";
+  var dims=getActiveDims(sec);
+  var fd=getFiltered(sec);
 
   // KPIs
-  var totS = 0, totP = 0;
-  fd.forEach(function(r){ totS += r.sales; totP += r.profit; });
-  var totM = totS ? totP / totS * 100 : 0;
-  document.getElementById("kpi-sales").textContent = INR(totS);
-  document.getElementById("kpi-profit").textContent = (totP < 0 ? "-" : "") + INR(totP);
-  document.getElementById("kpi-profit").className = "kpi-val" + (totP < 0 ? " neg" : "");
-  document.getElementById("kpi-margin").textContent = totM.toFixed(1) + "%";
-  document.getElementById("kpi-margin").className = "kpi-val" + (totM < 0 ? " neg" : "");
-
-  var wks = [...new Set(allData.map(function(d){ return d.week; }))];
-  document.getElementById("data-info").textContent =
-    allData.length + " rows · " +
-    [...new Set(allData.map(function(d){ return d.sku; }))].length + " SKUs · Weeks " +
-    Math.min.apply(null, wks) + "–" + Math.max.apply(null, wks);
+  var totS=0,totP=0;
+  fd.forEach(function(r){totS+=r.sales;totP+=r.profit;});
+  var totM=totS?totP/totS*100:0;
+  document.getElementById(sec+"-kpi-sales").textContent=INR(totS);
+  document.getElementById(sec+"-kpi-profit").textContent=(totP<0?"-":"")+INR(totP);
+  document.getElementById(sec+"-kpi-profit").className="kpi-val"+(totP<0?" neg":"");
+  document.getElementById(sec+"-kpi-margin").textContent=totM.toFixed(1)+"%";
+  document.getElementById(sec+"-kpi-margin").className="kpi-val"+(totM<0?" neg":"");
 
   // Periods
-  var pkeys = {}, psorts = {};
-  fd.forEach(function(d){
-    var k = pKey(d.week, state.period);
-    pkeys[k] = true;
-    psorts[k] = pSort(d.week, state.period);
+  var pSet={};
+  fd.forEach(function(d){pSet[d.period]=true;});
+  var periods=Object.keys(pSet).sort(function(a,b){
+    return sec==="w"?parseInt(a.replace("W",""))-parseInt(b.replace("W","")):monthSortKey(a)-monthSortKey(b);
   });
-  var periods = Object.keys(pkeys).sort(function(a, b){ return psorts[a] - psorts[b]; });
 
-  // Per-dim values
-  var dimKey = state.view === "category" ? "category" : "brand";
-  var chartData = periods.map(function(p){
-    var row = {};
+  // Chart values
+  var chartData=periods.map(function(p){
+    var row={};
     dims.forEach(function(dim){
-      var rows = fd.filter(function(d){ return d[dimKey] === dim && pKey(d.week, state.period) === p; });
-      if(!rows.length){ row[dim] = null; return; }
-      var s = 0, pr = 0;
-      rows.forEach(function(r){ s += r.sales; pr += r.profit; });
-      if(state.metric === "margin")       row[dim] = parseFloat((s ? pr/s*100 : 0).toFixed(2));
-      else if(state.metric === "profit")  row[dim] = parseFloat(pr.toFixed(2));
-      else                                row[dim] = parseFloat(s.toFixed(2));
+      var rows=fd.filter(function(d){return d[dimKey]===dim&&d.period===p;});
+      if(!rows.length){row[dim]=null;return;}
+      var s=0,pr=0;rows.forEach(function(r){s+=r.sales;pr+=r.profit;});
+      row[dim]=st.metric==="margin"?parseFloat((s?pr/s*100:0).toFixed(2)):st.metric==="profit"?parseFloat(pr.toFixed(2)):parseFloat(s.toFixed(2));
     });
     return row;
   });
 
-  // Destroy old chart
-  if(chartInst){ chartInst.destroy(); chartInst = null; }
-  var ctx = document.getElementById("main-chart").getContext("2d");
+  if(sec==="w"&&wChart){wChart.destroy();wChart=null;}
+  if(sec==="m"&&mChart){mChart.destroy();mChart=null;}
+  var ctx=document.getElementById(sec+"-chart").getContext("2d");
+  var newChart;
+  var commonOpts={responsive:true,maintainAspectRatio:false,layout:{padding:{top:40,right:16}},plugins:{datalabels:{},legend:{labels:{font:{size:11}}}}};
 
-  // ── COMBO CHART ────────────────────────────────────────────────────────────
-  if(state.metric === "combo"){
-    var salesData = periods.map(function(p){
-      var rows = fd.filter(function(d){ return pKey(d.week, state.period) === p; });
-      var s = 0; rows.forEach(function(r){ s += r.sales; });
-      return parseFloat(s.toFixed(2));
-    });
-    var marginData = periods.map(function(p){
-      var rows = fd.filter(function(d){ return pKey(d.week, state.period) === p; });
-      var s = 0, pr = 0; rows.forEach(function(r){ s += r.sales; pr += r.profit; });
-      return parseFloat((s ? pr/s*100 : 0).toFixed(2));
-    });
-    chartInst = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: periods,
-        datasets: [
-          {
-            label: "Sales (₹)",
-            data: salesData,
-            backgroundColor: "#6366f1cc",
-            borderColor: "#6366f1",
-            borderWidth: 1,
-            borderRadius: 3,
-            yAxisID: "y",
-            datalabels: {
-              display: true,
-              anchor: "end",
-              align: "top",
-              offset: 2,
-              color: "#4338ca",
-              font: { size: 10, weight: "600" },
-              formatter: function(v){ return fmtVal(v); }
-            }
-          },
-          {
-            label: "Margin %",
-            data: marginData,
-            type: "line",
-            borderColor: "#f59e0b",
-            backgroundColor: "#f59e0b22",
-            borderWidth: 2,
-            pointRadius: 5,
-            pointBackgroundColor: "#f59e0b",
-            tension: 0.3,
-            yAxisID: "y2",
-            datalabels: {
-              display: true,
-              anchor: "end",
-              align: "top",
-              offset: 8,
-              color: "#b45309",
-              font: { size: 10, weight: "600" },
-              formatter: function(v){ return fmtPct(v); }
-            }
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: { padding: { top: 40, right: 16 } },
-        plugins: {
-          datalabels: {},
-          legend: { labels: { font: { size: 11 } } },
-          tooltip: { callbacks: { label: function(c){
-            return c.dataset.yAxisID === "y2"
-              ? " " + c.dataset.label + ": " + c.parsed.y.toFixed(1) + "%"
-              : " " + c.dataset.label + ": " + INR(c.parsed.y);
-          }}}
-        },
-        scales: {
-          x: { ticks: { font: { size: 11 } } },
-          y: { ticks: { font: { size: 11 }, callback: function(v){ return fmtVal(v); } }, grid: { color: "#f0f0f0" }, title: { display: true, text: "Sales", font: { size: 10 } } },
-          y2: { position: "right", ticks: { font: { size: 11 }, callback: function(v){ return v.toFixed(0) + "%"; } }, grid: { drawOnChartArea: false }, title: { display: true, text: "Margin %", font: { size: 10 } } }
-        }
-      }
-    });
-
-  // ── LINE CHART (Margin %) ──────────────────────────────────────────────────
-  } else if(state.metric === "margin"){
-    chartInst = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: periods,
-        datasets: dims.map(function(dim, i){
-          var col = COLORS[i % COLORS.length];
-          return {
-            label: dim,
-            data: chartData.map(function(r){ return r[dim]; }),
-            backgroundColor: col + "22",
-            borderColor: col,
-            borderWidth: 2,
-            pointRadius: 5,
-            pointBackgroundColor: col,
-            tension: 0.3,
-            fill: false,
-            datalabels: {
-              display: true,
-              anchor: "end",
-              align: "top",
-              offset: 8,
-              color: col,
-              font: { size: 10, weight: "600" },
-              formatter: function(v){ return (v == null) ? null : fmtPct(v); }
-            }
-          };
-        })
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: { padding: { top: 40, right: 16 } },
-        plugins: {
-          datalabels: {},
-          legend: { labels: { font: { size: 11 } } },
-          tooltip: { callbacks: { label: function(c){ return " " + c.dataset.label + ": " + c.parsed.y.toFixed(1) + "%"; } } }
-        },
-        scales: {
-          x: { ticks: { font: { size: 11 } } },
-          y: { ticks: { font: { size: 11 }, callback: function(v){ return v.toFixed(0) + "%"; } }, grid: { color: "#f0f0f0" } }
-        }
-      }
-    });
-
-  // ── BAR CHART (Profit / Sales) ─────────────────────────────────────────────
+  if(st.metric==="combo"){
+    var salesData=periods.map(function(p){var rows=fd.filter(function(d){return d.period===p;});var s=0;rows.forEach(function(r){s+=r.sales;});return parseFloat(s.toFixed(2));});
+    var marginData=periods.map(function(p){var rows=fd.filter(function(d){return d.period===p;});var s=0,pr=0;rows.forEach(function(r){s+=r.sales;pr+=r.profit;});return parseFloat((s?pr/s*100:0).toFixed(2));});
+    newChart=new Chart(ctx,{type:"bar",data:{labels:periods,datasets:[
+      {label:"Sales (₹)",data:salesData,backgroundColor:"#6366f1cc",borderColor:"#6366f1",borderWidth:1,borderRadius:3,yAxisID:"y",
+        datalabels:{display:true,anchor:"end",align:"top",offset:2,color:"#4338ca",font:{size:10,weight:"600"},formatter:function(v){return fmtVal(v);}}},
+      {label:"Margin %",data:marginData,type:"line",borderColor:"#f59e0b",backgroundColor:"#f59e0b22",borderWidth:2,pointRadius:5,pointBackgroundColor:"#f59e0b",tension:0.3,yAxisID:"y2",
+        datalabels:{display:true,anchor:"end",align:"top",offset:8,color:"#b45309",font:{size:10,weight:"600"},formatter:function(v){return fmtPct(v);}}}
+    ]},options:Object.assign({},commonOpts,{
+      plugins:Object.assign({},commonOpts.plugins,{tooltip:{callbacks:{label:function(c){return c.dataset.yAxisID==="y2"?" "+c.dataset.label+": "+c.parsed.y.toFixed(1)+"%":" "+c.dataset.label+": "+INR(c.parsed.y);}}}}),
+      scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11},callback:function(v){return fmtVal(v);}},grid:{color:"#f0f0f0"},title:{display:true,text:"Sales",font:{size:10}}},y2:{position:"right",ticks:{font:{size:11},callback:function(v){return v.toFixed(0)+"%";}},grid:{drawOnChartArea:false},title:{display:true,text:"Margin %",font:{size:10}}}}
+    })});
+  } else if(st.metric==="margin"){
+    newChart=new Chart(ctx,{type:"line",data:{labels:periods,datasets:dims.map(function(dim,i){var col=COLORS[i%COLORS.length];return{label:dim,data:chartData.map(function(r){return r[dim];}),backgroundColor:col+"22",borderColor:col,borderWidth:2,pointRadius:5,pointBackgroundColor:col,tension:0.3,fill:false,datalabels:dlLine(col)};})},options:Object.assign({},commonOpts,{
+      plugins:Object.assign({},commonOpts.plugins,{tooltip:{callbacks:{label:function(c){return" "+c.dataset.label+": "+c.parsed.y.toFixed(1)+"%";}}}}),
+      scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11},callback:function(v){return v.toFixed(0)+"%";}},grid:{color:"#f0f0f0"}}}
+    })});
   } else {
-    chartInst = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: periods,
-        datasets: dims.map(function(dim, i){
-          var col = COLORS[i % COLORS.length];
-          return {
-            label: dim,
-            data: chartData.map(function(r){ return r[dim]; }),
-            backgroundColor: col + "cc",
-            borderColor: col,
-            borderWidth: 1,
-            borderRadius: 3,
-            datalabels: {
-              display: true,
-              anchor: "end",
-              align: "top",
-              offset: 2,
-              color: col,
-              font: { size: 10, weight: "600" },
-              formatter: function(v){ return (v == null) ? null : fmtVal(v); }
-            }
-          };
-        })
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: { padding: { top: 40, right: 16 } },
-        plugins: {
-          datalabels: {},
-          legend: { labels: { font: { size: 11 } } },
-          tooltip: { callbacks: { label: function(c){ return " " + c.dataset.label + ": " + INR(c.parsed.y); } } }
-        },
-        scales: {
-          x: { ticks: { font: { size: 11 } } },
-          y: { ticks: { font: { size: 11 }, callback: function(v){ return fmtVal(v); } }, grid: { color: "#f0f0f0" } }
-        }
-      }
-    });
+    newChart=new Chart(ctx,{type:"bar",data:{labels:periods,datasets:dims.map(function(dim,i){var col=COLORS[i%COLORS.length];return{label:dim,data:chartData.map(function(r){return r[dim];}),backgroundColor:col+"cc",borderColor:col,borderWidth:1,borderRadius:3,datalabels:dlBar(col)};})},options:Object.assign({},commonOpts,{
+      plugins:Object.assign({},commonOpts.plugins,{tooltip:{callbacks:{label:function(c){return" "+c.dataset.label+": "+INR(c.parsed.y);}}}}),
+      scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11},callback:function(v){return fmtVal(v);}},grid:{color:"#f0f0f0"}}}
+    })});
   }
+  if(sec==="w") wChart=newChart; else mChart=newChart;
 
-  // ── SUMMARY TABLE ─────────────────────────────────────────────────────────
-  var sumData = dims.map(function(dim){
-    var rows = fd.filter(function(d){ return d[dimKey] === dim; });
-    var s=0, p=0, c=0, q=0;
-    rows.forEach(function(r){ s+=r.sales; p+=r.profit; c+=r.cost; q+=r.qty; });
-    return { dim:dim, s:s, p:p, c:c, q:q, m: s ? p/s*100 : 0 };
-  }).sort(function(a,b){ return b.m - a.m; });
-  var dh = state.view === "category" ? "Category" : "Brand";
-  document.getElementById("summary-table").innerHTML =
-    '<thead><tr><th>' + dh + '</th><th>Sales</th><th>Cost</th><th>Profit</th><th>Margin</th><th>Qty</th></tr></thead><tbody>' +
-    sumData.map(function(r){
-      return '<tr><td style="font-weight:500">' + r.dim + '</td><td>' + INR(r.s) + '</td><td>' + INR(r.c) + '</td>' +
-        '<td class="' + (r.p < 0 ? "rd" : "gn") + '">' + (r.p < 0 ? "-" : "") + INR(r.p) + '</td>' +
-        '<td>' + badge(r.m) + '</td><td style="color:#6b7280">' + r.q + '</td></tr>';
-    }).join("") + '</tbody>';
+  // Summary
+  var sumData=dims.map(function(dim){
+    var rows=fd.filter(function(d){return d[dimKey]===dim;});
+    var s=0,p=0,c=0,q=0;rows.forEach(function(r){s+=r.sales;p+=r.profit;c+=r.cost;q+=r.qty;});
+    return{dim:dim,s:s,p:p,c:c,q:q,m:s?p/s*100:0};
+  }).sort(function(a,b){return b.m-a.m;});
+  var dh=st.view==="category"?"Category":"Brand";
+  document.getElementById(sec+"-summary-table").innerHTML=
+    '<thead><tr><th>'+dh+'</th><th>Sales</th><th>Cost</th><th>Profit</th><th>Margin</th><th>Qty</th></tr></thead><tbody>'+
+    sumData.map(function(r){return'<tr><td style="font-weight:500">'+r.dim+'</td><td>'+INR(r.s)+'</td><td>'+INR(r.c)+'</td><td class="'+(r.p<0?"rd":"gn")+'">'+(r.p<0?"-":"")+INR(r.p)+'</td><td>'+badge(r.m)+'</td><td style="color:#6b7280">'+r.q+'</td></tr>';}).join("")+'</tbody>';
 
-  // ── SKU TABLE ──────────────────────────────────────────────────────────────
-  var skuMap = {};
+  // SKU table
+  var skuMap={};
   fd.forEach(function(d){
-    if(!skuMap[d.sku]) skuMap[d.sku] = { name:d.name, sku:d.sku, cat:d.category, brand:d.brand, s:0, p:0, c:0, q:0 };
-    skuMap[d.sku].s += d.sales;
-    skuMap[d.sku].p += d.profit;
-    skuMap[d.sku].c += d.cost;
-    skuMap[d.sku].q += d.qty;
+    if(!skuMap[d.sku]) skuMap[d.sku]={name:d.name,sku:d.sku,cat:d.category,brand:d.brand,s:0,p:0,c:0,q:0};
+    skuMap[d.sku].s+=d.sales;skuMap[d.sku].p+=d.profit;skuMap[d.sku].c+=d.cost;skuMap[d.sku].q+=d.qty;
   });
-  var skus = Object.values(skuMap).map(function(r){ return Object.assign({}, r, { m: r.s ? r.p/r.s*100 : 0 }); })
-    .sort(function(a,b){ return a.m - b.m; });
-  document.getElementById("sku-count").textContent = skus.length + " SKUs";
-  document.getElementById("sku-table").innerHTML =
-    '<thead><tr><th>Item</th><th>Category</th><th>Brand</th><th>Sales</th><th>Profit</th><th>Margin</th><th>Qty</th></tr></thead><tbody>' +
-    skus.map(function(r){
-      return '<tr><td class="trunc" title="' + r.name + '">' + r.name + '</td>' +
-        '<td style="color:#6b7280">' + r.cat + '</td><td style="color:#6b7280">' + r.brand + '</td>' +
-        '<td>' + INR(r.s) + '</td>' +
-        '<td class="' + (r.p < 0 ? "rd" : "gn") + '">' + (r.p < 0 ? "-" : "") + INR(r.p) + '</td>' +
-        '<td>' + badge(r.m) + '</td><td style="color:#6b7280">' + r.q + '</td></tr>';
-    }).join("") + '</tbody>';
+  var skus=Object.values(skuMap).map(function(r){return Object.assign({},r,{m:r.s?r.p/r.s*100:0});}).sort(function(a,b){return a.m-b.m;});
+  document.getElementById(sec+"-sku-count").textContent=skus.length+" SKUs";
+  document.getElementById(sec+"-sku-table").innerHTML=
+    '<thead><tr><th>Item</th><th>Category</th><th>Brand</th><th>Sales</th><th>Profit</th><th>Margin</th><th>Qty</th></tr></thead><tbody>'+
+    skus.map(function(r){return'<tr><td class="trunc" title="'+r.name+'">'+r.name+'</td><td style="color:#6b7280">'+r.cat+'</td><td style="color:#6b7280">'+r.brand+'</td><td>'+INR(r.s)+'</td><td class="'+(r.p<0?"rd":"gn")+'">'+(r.p<0?"-":"")+INR(r.p)+'</td><td>'+badge(r.m)+'</td><td style="color:#6b7280">'+r.q+'</td></tr>';}).join("")+'</tbody>';
 }
 
-// ── BOOT ──────────────────────────────────────────────────────────────────────
-window.onload = function(){ loadData(); };
+window.onload=function(){loadAll();};
 </script>
 </body>
 </html>
