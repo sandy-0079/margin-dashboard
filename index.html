@@ -102,12 +102,9 @@ tr:nth-child(even) td{background:#f9fafb}
 .ins-row .iname{flex:1;font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ins-row .imetrics{display:flex;gap:4px;flex-shrink:0;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .ins-chip{font-size:11px;font-weight:600;padding:2px 7px;border-radius:6px;white-space:nowrap}
-.ins-chip.up-s{background:#d1fae5;color:#065f46}
-.ins-chip.dn-s{background:#fee2e2;color:#991b1b}
-.ins-chip.up-pct{background:#dcfce7;color:#166534}
-.ins-chip.dn-pct{background:#fecaca;color:#991b1b}
-.ins-chip.up-m{background:#dbeafe;color:#1e40af}
-.ins-chip.dn-m{background:#fef3c7;color:#92400e}
+.ins-chip.up{background:#d1fae5;color:#065f46}
+.ins-chip.dn{background:#fee2e2;color:#991b1b}
+.ins-chip.zt{background:#fef9c3;color:#854d0e}
 .ins-chip.nt{background:#f3f4f6;color:#9ca3af}
 .ins-sub{font-size:10px;color:#9ca3af}
 .drill-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:14px;flex-wrap:wrap}
@@ -633,7 +630,7 @@ function chipMargin(dM){
 // level: "category" → abs+margin only; "brand"/"sku" → pct+abs+margin
 // level: "category" → Sales%+Sales₹+Profit₹+Margin pp; "brand"/"sku" → same
 function metricsHtml(r,level){
-  return chipSalesPct(r.dSPct)+chipSalesAbs(r.dS)+chipProfitAbs(r.dP)+chipMargin(r.dM);
+  return chipSalesPct(r.dSPct)+chipSalesAbs(r.dS)+chipMargin(r.dM)+chipProfitAbs(r.dP);
 }
 function chipProfitAbs(dP){
   if(dP===null||dP===undefined)return'<span class="ins-chip nt">—</span>';
@@ -658,10 +655,11 @@ function moverRows(items,sec,level){
 
 function chipLegendHtml(level){
   return'<div class="chip-legend">'
-    +'<span><span class="ins-chip up-pct" style="font-size:10px">▲ Sales %</span></span>'
-    +'<span><span class="ins-chip up-s" style="font-size:10px">▲ Sales ₹</span></span>'
-    +'<span><span class="ins-chip up-s" style="font-size:10px">▲ P Profit ₹</span></span>'
-    +'<span><span class="ins-chip up-m" style="font-size:10px">▲ Margin pp</span></span>'
+    +'<span><span class="ins-chip up" style="font-size:10px">▲S% Sales growth</span></span>'
+    +'<span><span class="ins-chip up" style="font-size:10px">▲S₹ Sales absolute</span></span>'
+    +'<span><span class="ins-chip up" style="font-size:10px">▲M pp Margin delta</span></span>'
+    +'<span><span class="ins-chip up" style="font-size:10px">▲M₹ Profit absolute</span></span>'
+    +'<span><span class="ins-chip zt" style="font-size:10px">●__ No change</span></span>'
     +'</div>';
 }
 
