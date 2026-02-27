@@ -525,7 +525,7 @@ function buildMovers(data,dimKey,curPeriod,prevPeriod,filterKey,filterVal,sec){
   var n=adaptiveN(all.length);
   var byM=all.filter(function(r){return r.dM!==null;}).sort(function(a,b){return b.dM-a.dM;});
   var byS=all.filter(function(r){return r.dS!==null;}).sort(function(a,b){return b.dS-a.dS;});
-  return{topM:byM.slice(0,n),botM:byM.slice(-n).reverse(),topS:byS.slice(0,n),botS:byS.slice(-n).reverse(),n,total:all.length};
+  return{topM:byM.slice(0,n),botM:byM.slice(-n).reverse(),topS:byS.slice(0,n),botS:byS.slice(-n).reverse(),n,total:all.length,allItems:all};
 }
 // ── CHIPS: all inline styles, no CSS classes ──────────────────────────────────
 function chip(prefix,val,isMargin){
@@ -546,16 +546,23 @@ function chipPct(val){
 function metricsHtml(r){
   return chipPct(r.dSPct)+chip("S",r.dS,false)+chip("M",r.dM,true)+chip("M",r.dP,false);
 }
-function chipLegend(){
-  var s='font-size:11px;font-weight:600;padding:2px 7px;border-radius:6px;white-space:nowrap;background:#d1fae5;color:#065f46';
-  var y='font-size:11px;font-weight:600;padding:2px 7px;border-radius:6px;white-space:nowrap;background:#fef9c3;color:#854d0e';
+function chipLegend(mv){
+  var all=mv.allItems;
+  var sumCurS=0,sumCurP=0,sumPrevS=0,sumPrevP=0;
+  all.forEach(function(r){
+    sumCurS+=r.s||0;
+    sumCurP+=(r.s||0)*(r.m||0)/100;
+    if(r.prevS!=null){
+      sumPrevS+=r.prevS;
+      sumPrevP+=r.prevS*((r.m||0)-(r.dM||0))/100;
+    }
+  });
+  var aggPct=sumPrevS>0?(sumCurS-sumPrevS)/sumPrevS*100:null;
+  var aggDS=sumCurS-sumPrevS;
+  var aggDP=sumCurP-sumPrevP;
+  var aggMpp=sumPrevS>0?(sumCurS?sumCurP/sumCurS*100:0)-(sumPrevS?sumPrevP/sumPrevS*100:0):null;
   return'<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">'
-    +'<span style="'+s+'">▲S 12.3%</span>'
-    +'<span style="'+s+'">▲S ₹2.1L</span>'
-    +'<span style="'+s+'">▲M 1.2pp</span>'
-    +'<span style="'+s+'">▲M ₹45K</span>'
-    +'<span style="'+y+'">●S 0.0%</span>'
-    +'<span style="'+y+'">●M 0.0pp</span>'
+    +chipPct(aggPct)+chip("S",aggDS,false)+chip("M",aggMpp,true)+chip("M",aggDP,false)
     +'</div>';
 }
 function moverRows(items,sec,level){
@@ -630,7 +637,7 @@ function insLevelBlock(title,mv,sec,level){
   var pill=mv.n===mv.total?"all "+mv.total:mv.n+" of "+mv.total+" shown";
   var h='<div class="ins-level">';
   h+='<div class="ins-level-hdr">'+title+'<span class="pill">'+pill+'</span></div>';
-  h+=chipLegend();
+  h+=chipLegend(mv);
   h+='<div class="sec-sub-hdr">📈 Sales Movement</div>';
   h+='<div class="ins-cols">';
   h+='<div class="ins-half"><div class="ins-half-hdr gain"><span class="tri-up">▲</span> Top Gainers</div>'+moverRows(mv.topS,sec,level)+'</div>';
